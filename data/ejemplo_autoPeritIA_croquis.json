@@ -1,0 +1,48 @@
+{
+  "cooperacion_nro": "964/2025",
+  "magistrado_tipo": "Fiscalía Penal, Contravencional y de Faltas N° 20",
+  "magistrado_nombre": "Dr. Rozas",
+  "secretaria": "Dra. Roldan",
+  "caratula": "Lesiones culposas Art. 94 C.P.N.",
+  "nro_actuaciones": "121779/2025",
+  "fecha_hecho": "22 de Febrero de 2025",
+  "fecha_informe": "23 de Febrero de 2025",
+  "lugar_hecho": "Av. Medrano y Guardia Vieja, Ciudad Autónoma de Buenos Aires",
+  "nombre_perito": "Mariano Martinez",
+  "legajo": "25805947",
+  "vehiculo_1": {
+    "tipo": "Moto",
+    "marca": "Royal Enfield",
+    "modelo": "Himalayan",
+    "color": "Gris y Celeste",
+    "dominio": "A230YDA",
+    "direccion": "Av. Medrano",
+    "sentido": "N a S",
+    "posicion": [30, 50]
+  },
+  "vehiculo_2": {
+    "tipo": "Auto",
+    "marca": "Dodge",
+    "modelo": "Journey",
+    "color": "Negro",
+    "dominio": "MKS-719",
+    "direccion": "Guardia Vieja",
+    "sentido": "E a O",
+    "posicion": [50, 30]
+  },
+  "impacto": {
+    "coordenadas": [50, 50],
+    "descripcion": "Colisión entre moto y parte trasera del vehículo auto"
+  },
+  "calzada": {
+    "ancho_medrano": 10.5,
+    "ancho_guardia_vieja": 8.0,
+    "material": "asfalto",
+    "estado": "seco y limpio"
+  },
+  "huellas": {
+    "arrastre": true,
+    "longitud_arrastre": 5.2,
+    "fragmentos": true
+  }
+}
