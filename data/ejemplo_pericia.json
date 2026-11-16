@@ -1,0 +1,48 @@
+{
+  "encabezado": {
+    "numero_informe": "[Completar]",
+    "fecha_texto": "[Completar]",
+    "sumario": "[Completar]",
+    "comisaria_vecinal": "[Completar]",
+    "caratula": "[Completar]",
+    "fiscalia": "[Completar]",
+    "parrafo_introductorio": "[Completar con identificación del perito, actuaciones, Comisaría Vecinal, carátula, Fiscalía y rodados inspeccionados.]"
+  },
+  "lugar_relevamiento": "[Completar]",
+  "elementos_estudio": [],
+  "tareas_periciales": {
+    "intervencion_y_consigna": {
+      "hora_arribo": "[Completar]",
+      "efectivo_consigna": {
+        "jerarquia": "[Completar]",
+        "nombre_completo": "[Completar]",
+        "legajo": "[Completar]"
+      },
+      "relato_comision": "[Completar con el arribo, comisión de Sala de Situación y contacto con el efectivo de consigna.]"
+    },
+    "inspeccion_ocular": {
+      "tipo_arteria_y_sentido": "[Completar]",
+      "superficie_calzada": "[Completar]",
+      "estado_calzada": "[Completar]",
+      "iluminacion_y_visibilidad": "[Completar]",
+      "senalizacion_vial": "[Completar]",
+      "escena_removida": false,
+      "descripcion_integral": "[Completar]"
+    },
+    "relevamiento_planimetrico_y_rastros": {
+      "hay_vestigios": false,
+      "mediciones_y_referencias": "[Completar]",
+      "detalle_rastros": [],
+      "observacion_sin_rastros": "[Completar; indicar si no se constataron vestigios o si la escena se encontraba removida.]"
+    },
+    "fijacion_fotografica": {
+      "descripcion_diligencia": "[Completar]"
+    },
+    "examen_tecnico_vehicular": []
+  },
+  "conclusion": {
+    "consideraciones_tecnicas": "[Completar con el análisis de compatibilidad físico-mecánica sustentado en los datos relevados.]",
+    "conclusion_pericial": "[Completar; no atribuir responsabilidades ni roles de embestidor/embestido.]",
+    "parrafo_remision_ingenieria_vial": "Si se requiriera determinar velocidades o efectuar una reconstrucción cinemática, podrá sugerirse la intervención de la División Ingeniería Vial, Av. Ramón Castillo 1720, 9.º piso, CABA, ingenieriavialcaba@gmail.com."
+  }
+}

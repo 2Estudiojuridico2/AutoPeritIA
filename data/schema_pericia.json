@@ -1,0 +1,109 @@
+{
+  "type": "object",
+  "properties": {
+    "encabezado": {
+      "type": "object",
+      "properties": {
+        "numero_informe": { "type": "string" },
+        "fecha_texto": { "type": "string" },
+        "sumario": { "type": "string" },
+        "comisaria_vecinal": { "type": "string" },
+        "caratula": { "type": "string" },
+        "fiscalia": { "type": "string" },
+        "parrafo_introductorio": { "type": "string" }
+      },
+      "required": ["numero_informe", "fecha_texto", "sumario", "comisaria_vecinal", "caratula", "fiscalia", "parrafo_introductorio"]
+    },
+    "lugar_relevamiento": { "type": "string" },
+    "elementos_estudio": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "orden": { "type": "integer" },
+          "tipo_rodado": { "type": "string" },
+          "marca": { "type": "string" },
+          "modelo": { "type": "string" },
+          "dominio": { "type": "string" },
+          "descripcion_lista": { "type": "string" }
+        },
+        "required": ["orden", "tipo_rodado", "marca", "modelo", "dominio", "descripcion_lista"]
+      }
+    },
+    "tareas_periciales": {
+      "type": "object",
+      "properties": {
+        "intervencion_y_consigna": {
+          "type": "object",
+          "properties": {
+            "hora_arribo": { "type": "string" },
+            "efectivo_consigna": {
+              "type": "object",
+              "properties": {
+                "jerarquia": { "type": "string" },
+                "nombre_completo": { "type": "string" },
+                "legajo": { "type": "string" }
+              },
+              "required": ["jerarquia", "nombre_completo", "legajo"]
+            },
+            "relato_comision": { "type": "string", "description": "Arribo al lugar, comisión de Sala de Situación y contacto con consigna." }
+          },
+          "required": ["hora_arribo", "efectivo_consigna", "relato_comision"]
+        },
+        "inspeccion_ocular": {
+          "type": "object",
+          "properties": {
+            "tipo_arteria_y_sentido": { "type": "string", "description": "Ej: Avenida de doble sentido con separador central / Calle de sentido único Sur." },
+            "superficie_calzada": { "type": "string", "description": "Ej: asfáltica / hormigón" },
+            "estado_calzada": { "type": "string", "description": "Ej: seca / húmeda" },
+            "iluminacion_y_visibilidad": { "type": "string", "description": "Ej: iluminación natural diurna, visibilidad óptima" },
+            "senalizacion_vial": { "type": "string", "description": "Señalización horizontal, vertical o semafórica observada." },
+            "escena_removida": { "type": "boolean" },
+            "descripcion_integral": { "type": "string", "description": "Redacción técnica completa de la Inspección Ocular del escenario." }
+          },
+          "required": ["tipo_arteria_y_sentido", "superficie_calzada", "estado_calzada", "iluminacion_y_visibilidad", "senalizacion_vial", "escena_removida", "descripcion_integral"]
+        },
+        "relevamiento_planimetrico_y_rastros": {
+          "type": "object",
+          "properties": {
+            "hay_vestigios": { "type": "boolean" },
+            "mediciones_y_referencias": { "type": "string", "description": "Ubicación métrica respecto a puntos fijos y posiciones finales." },
+            "detalle_rastros": { "type": "array", "items": { "type": "string" }, "description": "Lista secuencial de huellas de frenado, derrape, roces o restos. Vacío si no hay." },
+            "observacion_sin_rastros": { "type": "string", "description": "Aclaración técnica si no se hallaron vestigios o si la escena fue removida." }
+          },
+          "required": ["hay_vestigios", "mediciones_y_referencias", "detalle_rastros", "observacion_sin_rastros"]
+        },
+        "fijacion_fotografica": {
+          "type": "object",
+          "properties": { "descripcion_diligencia": { "type": "string", "description": "Constancia de tomas fotográficas generales, de detalle y con testigo métrico." } },
+          "required": ["descripcion_diligencia"]
+        },
+        "examen_tecnico_vehicular": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "orden": { "type": "integer" },
+              "identificacion_corta": { "type": "string" },
+              "posicion_final": { "type": "string" },
+              "descripcion_danos": { "type": "string" },
+              "sistemas_seguridad": { "type": "string" }
+            },
+            "required": ["orden", "identificacion_corta", "posicion_final", "descripcion_danos", "sistemas_seguridad"]
+          }
+        }
+      },
+      "required": ["intervencion_y_consigna", "inspeccion_ocular", "relevamiento_planimetrico_y_rastros", "fijacion_fotografica", "examen_tecnico_vehicular"]
+    },
+    "conclusion": {
+      "type": "object",
+      "properties": {
+        "consideraciones_tecnicas": { "type": "string", "description": "Análisis de compatibilidad físico-mecánica entre daños, huellas y dinámica." },
+        "conclusion_pericial": { "type": "string", "description": "Cierre concluyente sintetizando la compatibilidad del evento." },
+        "parrafo_remision_ingenieria_vial": { "type": "string", "description": "Párrafo estándar sugiriendo giro a División Ingeniería Vial." }
+      },
+      "required": ["consideraciones_tecnicas", "conclusion_pericial", "parrafo_remision_ingenieria_vial"]
+    }
+  },
+  "required": ["encabezado", "lugar_relevamiento", "elementos_estudio", "tareas_periciales", "conclusion"]
+}
