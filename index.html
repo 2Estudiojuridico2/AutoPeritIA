@@ -14,7 +14,6 @@
       --accent-hover: #2563eb;
       --border: #334155;
       --success: #10b981;
-      --warning: #f59e0b;
     }
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { margin: 0; background: var(--bg); color: var(--text); padding: 16px; }
@@ -23,7 +22,6 @@
     header h1 { font-size: 1.2rem; margin: 0; }
     header span { font-size: 0.85rem; color: var(--muted); }
     
-    /* Barra de API Key */
     .api-bar { background: #172033; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
     .api-bar input { flex: 1; min-width: 220px; padding: 8px 10px; font-size: 0.85rem; }
     .api-bar button { flex: 0 0 auto; padding: 8px 14px; font-size: 0.85rem; background: #334155; color: white; }
@@ -58,10 +56,9 @@
       <h1>Sección Investigación Científica Vial - CABA</h1>
       <span>Perito Actuante: OFL Mayor Lionel ZURITA (LP 11500)</span>
     </div>
-    <span>Etapa 3 • Motor Gemini Conectado</span>
+    <span>Etapa 3 • Interactions API</span>
   </header>
 
-  <!-- CONFIGURACIÓN SEGURA DE API KEY EN NAVEGADOR -->
   <div class="api-bar">
     <input type="password" id="apiKeyInput" placeholder="Pegá aquí tu API Key de Google AI Studio (AIzaSy...)">
     <button type="button" onclick="guardarApiKey()">💾 Guardar Clave</button>
@@ -69,7 +66,6 @@
   </div>
 
   <div class="grid">
-    <!-- PANEL IZQUIERDO: CARGA RÁPIDA -->
     <div class="card">
       <h2>1. Carga de Datos del Siniestro</h2>
       
@@ -118,7 +114,7 @@
 
       <div>
         <label>Relato Crudo (Vehículos, Posición Final, Daños, Calzada y Rastros)</label>
-        <textarea id="datosCrudos" placeholder="Escribí o dictá por voz todo junto. Ej: Peugeot 206 HDJ736 sobre su techo en 3er carril sentido sur, deformación frontolateral izquierda de adelante hacia atrás, calzada asfáltica seca, huellas desde 29 metros antes..."></textarea>
+        <textarea id="datosCrudos" placeholder="Escribí o dictá por voz todo junto..."></textarea>
       </div>
 
       <div class="btn-group">
@@ -127,7 +123,6 @@
       </div>
     </div>
 
-    <!-- PANEL DERECHO: VISTA PREVIA DEL INFORME -->
     <div class="card">
       <h2>2. Informe Técnico Redactado (Editable)</h2>
       <div class="output-box" id="resultadoInforme" contenteditable="true">Guardá tu API Key arriba, completá los datos a la izquierda y presioná "Redactar Informe"...</div>
@@ -139,7 +134,6 @@
 </div>
 
 <script>
-  // --- GESTIÓN DE API KEY EN LOCALSTORAGE ---
   window.onload = () => {
     const savedKey = localStorage.getItem('gemini_api_key_caba');
     if (savedKey) {
@@ -158,7 +152,6 @@
     document.getElementById('apiStatus').textContent = '✓ Clave guardada en este dispositivo';
   }
 
-  // --- DICTADO POR VOZ ---
   let recognition;
   let grabando = false;
 
@@ -199,7 +192,6 @@
     }
   }
 
-  // --- SYSTEM PROMPT TÉCNICO ---
   const SYSTEM_PROMPT = `Actúa como un Perito Oficial en Accidentología Vial de la Policía de la Ciudad Autónoma de Buenos Aires (CABA), desempeñándote como asistente técnico-redactor judicial. Transforma los datos crudos relevados en el lugar del hecho en un Informe Técnico Pericial formal, riguroso y listo para su elevación judicial.
 
 DATOS INSTITUCIONALES FIJOS:
@@ -231,7 +223,6 @@ ESTRUCTURA OBLIGATORIA DEL INFORME (en texto plano limpio, sin asteriscos ni sí
 
 Emite directamente el texto completo del informe sin saludos ni comentarios adicionales.`;
 
-  // --- LLAMADA A LA API DE GEMINI ---
   async function generarConGemini() {
     const apiKey = localStorage.getItem('gemini_api_key_caba') || document.getElementById('apiKeyInput').value.trim();
     if (!apiKey) {
@@ -264,30 +255,42 @@ Relato técnico crudo: ${document.getElementById('datosCrudos').value}
     const output = document.getElementById('resultadoInforme');
     btn.disabled = true;
     btn.textContent = '⏳ Redactando pericia...';
-    output.textContent = 'Procesando datos técnicos con Gemini...';
+    output.textContent = 'Conectando con Gemini (Interactions API)...';
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+          "Api-Revision": "2026-05-20"
+        },
         body: JSON.stringify({
-          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: [{ parts: [{ text: datosUsuario }] }],
-          generationConfig: { temperature: 0.2 }
+          model: "gemini-4-hydrogen",
+          store: false,
+          system_instruction: SYSTEM_PROMPT,
+          input: datosUsuario
         })
       });
 
       const data = await response.json();
 
-      if (data.error) {
-        throw new Error(data.error.message || 'Error en la API de Gemini');
+      if (!response.ok || data.error) {
+        throw new Error(data.error?.message || `Error HTTP ${response.status}`);
       }
 
-      const textoGenerado = data.candidates[0].content.parts[0].text;
+      // Extraer el texto final desde steps (Interactions API)
+      const outputStep = data.steps?.slice().reverse().find(s => s.type === "model_output");
+      const textoGenerado = outputStep?.content?.find(c => c.type === "text")?.text || data.output_text;
+
+      if (!textoGenerado) {
+        throw new Error("La respuesta llegó vacía. Revisá los detalles en consola.");
+      }
+
       output.textContent = textoGenerado;
 
     } catch (error) {
-      output.textContent = `Error al conectar con Gemini:\n${error.message}\n\nVerificá que tu API Key sea correcta y tenga conexión a internet.`;
+      output.textContent = `Error al conectar con Gemini:\n${error.message}\n\nSi el error menciona CORS o bloqueo del navegador, avisame para resolverlo con un proxy gratuito o usando el SDK.`;
     } finally {
       btn.disabled = false;
       btn.textContent = '✨ Redactar Informe';
