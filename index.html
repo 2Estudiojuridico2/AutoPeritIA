@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pericias Viales CABA - Redactor Ágil</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --border: #334155;
+      --success: #10b981;
+    }
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { margin: 0; background: var(--bg); color: var(--text); padding: 16px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 20px; }
+    header h1 { font-size: 1.25rem; margin: 0; }
+    header span { font-size: 0.85rem; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .card h2 { font-size: 1rem; margin: 0; color: var(--accent); }
+    label { font-size: 0.85rem; color: var(--muted); display: block; margin-bottom: 4px; }
+    input, select, textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 10px; font-size: 0.95rem; }
+    textarea { resize: vertical; min-height: 220px; line-height: 1.5; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-group { display: flex; gap: 10px; margin-top: 8px; }
+    button { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: 0.2s; }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-voice { background: #334155; color: white; }
+    .btn-voice.recording { background: #ef4444; animation: pulse 1.2s infinite; }
+    .btn-copy { background: var(--success); color: #064e3b; }
+    .output-box { background: #ffffff; color: #111827; padding: 20px; border-radius: 6px; min-height: 460px; white-space: pre-wrap; font-family: "Times New Roman", Times, serif; font-size: 0.95rem; line-height: 1.45; overflow-y: auto; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>Sección Investigación Científica Vial - CABA</h1>
+      <span>Perito Actuante: OFL Mayor Lionel ZURITA (LP 11500)</span>
+    </div>
+    <span>Etapa 2 • Interfaz Ágil</span>
+  </header>
+
+  <div class="grid">
+    <!-- PANEL IZQUIERDO: CARGA RÁPIDA -->
+    <div class="card">
+      <h2>1. Datos Rápidos del Relevamiento</h2>
+      
+      <div class="row-2">
+        <div>
+          <label>N° Informe Técnico</label>
+          <input type="text" id="numInforme" placeholder="Ej: 7961">
+        </div>
+        <div>
+          <label>Sumario / Actuaciones</label>
+          <input type="text" id="sumario" placeholder="Ej: 720491 o N/A">
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div>
+          <label>Comisaría Vecinal</label>
+          <input type="text" id="comisaria" placeholder="Ej: 12A">
+        </div>
+        <div>
+          <label>Fiscalía (UFLA)</label>
+          <select id="fiscalia">
+            <option value="UFLA NORTE">UFLA NORTE</option>
+            <option value="UFLA SUR">UFLA SUR</option>
+            <option value="UFLA OESTE">UFLA OESTE</option>
+            <option value="UFLA ESTE">UFLA ESTE</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div>
+          <label>Carátula</label>
+          <input type="text" id="caratula" value="LESIONES 94 CPN">
+        </div>
+        <div>
+          <label>Hora de Arribo</label>
+          <input type="time" id="horaArribo">
+        </div>
+      </div>
+
+      <div>
+        <label>Lugar del Hecho (CABA) y Efectivo de Consigna</label>
+        <input type="text" id="lugarConsigna" placeholder="Ej: Gral. Paz Km 4.5 y Balbín - Ofl Mayor Carlos Escobar LP 42918">
+      </div>
+
+      <div>
+        <label>Relato Crudo (Vehículos, Posición Final, Daños, Calzada y Rastros)</label>
+        <textarea id="datosCrudos" placeholder="Escribí o dictá por voz todo junto como en el chat. Ej: Peugeot 206 HDJ736 sobre su techo en 3er carril sentido sur, deformación frontolateral izquierda de adelante hacia atrás, calzada asfáltica seca..."></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn-voice" id="btnVoz" onclick="toggleDictado()">🎤 Dictar por Voz</button>
+        <button type="button" class="btn-primary" onclick="generarVistaPrevia()">⚡ Armar Borrador</button>
+      </div>
+    </div>
+
+    <!-- PANEL DERECHO: VISTA PREVIA DEL INFORME -->
+    <div class="card">
+      <h2>2. Vista Previa del Informe Técnico</h2>
+      <div class="output-box" id="resultadoInforme">Completá los datos a la izquierda y presioná "Armar Borrador"...</div>
+      <div class="btn-group">
+        <button type="button" class="btn-copy" onclick="copiarInforme()">📋 Copiar Informe Completo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --- DICTADO POR VOZ NATIVO DEL NAVEGADOR ---
+  let recognition;
+  let grabando = false;
+
+  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.lang = 'es-AR';
+    recognition.continuous = true;
+    recognition.interimResults = false;
+
+    recognition.onresult = (event) => {
+      const texto = event.results[event.results.length - 1][0].transcript;
+      const area = document.getElementById('datosCrudos');
+      area.value += (area.value ? ' ' : '') + texto;
+    };
+
+    recognition.onend = () => {
+      grabando = false;
+      const btn = document.getElementById('btnVoz');
+      btn.classList.remove('recording');
+      btn.textContent = '🎤 Dictar por Voz';
+    };
+  }
+
+  function toggleDictado() {
+    if (!recognition) {
+      alert('Tu navegador no soporta dictado por voz. Probá con Chrome o Edge.');
+      return;
+    }
+    const btn = document.getElementById('btnVoz');
+    if (!grabando) {
+      recognition.start();
+      grabando = true;
+      btn.classList.add('recording');
+      btn.textContent = '⏹ Detener Dictado';
+    } else {
+      recognition.stop();
+    }
+  }
+
+  // --- GENERADOR BASE (EN ETAPA 3 SE CONECTA A GEMINI) ---
+  function generarVistaPrevia() {
+    const hoy = new Date();
+    const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    const fechaFormateada = `${hoy.getDate()} de ${meses[hoy.getMonth()]} del ${hoy.getFullYear()}`;
+
+    const num = document.getElementById('numInforme').value || '[XXXX]';
+    const sumario = document.getElementById('sumario').value || 'N/A';
+    const cv = document.getElementById('comisaria').value || '[CV]';
+    const fiscalia = document.getElementById('fiscalia').value;
+    const caratula = document.getElementById('caratula').value || 'LESIONES 94 CPN';
+    const hora = document.getElementById('horaArribo').value || '[HH:MM]';
+    const lugarConsigna = document.getElementById('lugarConsigna').value || '[Lugar y Consigna]';
+    const crudo = document.getElementById('datosCrudos').value || '[Sin datos cargados]';
+
+    const plantilla = `GOBIERNO DE LA CIUDAD AUTÓNOMA DE BUENOS AIRES
+MINISTERIO DE SEGURIDAD
+"2026 - Año del 30º Aniversario de la sanción de la Constitución de la Ciudad Autónoma de Buenos Aires."
+
+Ciudad Autónoma de Buenos Aires, ${fechaFormateada}.
+
+INFORME TÉCNICO N° ${num}/2026.
+
+AL SEÑOR JEFE DE SECCIÓN INVESTIGACIÓN CIENTÍFICA VIAL.
+S......................./.......................D.
+
+Quien suscribe, Oficial Mayor, Legajo N° 11500, Lionel Nicolás ZURITA, Técnico Superior en Criminalística con especialización en Accidentología Vial, numerario de la Sección Investigación Científica Vial, dependiente de la División Ingeniería Vial, Superintendencia de Policía Científica POLICÍA DE LA CIUDAD DE BUENOS AIRES, tiene el agrado de dirigirse a Ud. en el marco de las actuaciones sumariales N° ${sumario}/2026, instruidas por la Comisaría Vecinal ${cv} de la Policía de la Ciudad de Buenos Aires, caratuladas: "${caratula}", con intervención de la Unidad Fiscal ${fiscalia}.
+
+---
+INSPECCIÓN OCULAR Y DILIGENCIAS (Arribo: ${hora} hs)
+Lugar y Consigna: ${lugarConsigna}
+
+DATOS RELEVADOS PARA PROCESAR CON IA:
+${crudo}
+
+---
+OFL Mayor LIONEL ZURITA LP 11500
+Técnico Superior en Criminalística - Especialista en Accidentología Vial
+POLICÍA DE LA CIUDAD DE BUENOS AIRES`;
+
+    document.getElementById('resultadoInforme').textContent = plantilla;
+  }
+
+  function copiarInforme() {
+    const texto = document.getElementById('resultadoInforme').textContent;
+    navigator.clipboard.writeText(texto);
+    alert('Informe copiado al portapapeles.');
+  }
+</script>
+
+</body>
+</html>
