@@ -24,6 +24,7 @@
     
     .api-bar { background: #172033; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
     .api-bar input { flex: 1; min-width: 220px; padding: 8px 10px; font-size: 0.85rem; }
+    .api-bar select { width: auto; padding: 8px 10px; font-size: 0.85rem; }
     .api-bar button { flex: 0 0 auto; padding: 8px 14px; font-size: 0.85rem; background: #334155; color: white; }
     .api-status { font-size: 0.8rem; color: var(--success); }
 
@@ -56,12 +57,17 @@
       <h1>Sección Investigación Científica Vial - CABA</h1>
       <span>Perito Actuante: OFL Mayor Lionel ZURITA (LP 11500)</span>
     </div>
-    <span>Etapa 3 • Gemini 4 Hydrogen</span>
+    <span>Etapa 3 • Conexión Directa REST</span>
   </header>
 
   <div class="api-bar">
     <input type="password" id="apiKeyInput" placeholder="Pegá aquí tu API Key de Google AI Studio (AIzaSy...)">
-    <button type="button" id="btnGuardarKey">💾 Guardar Clave</button>
+    <select id="modeloSelect" title="Modelo Gemini">
+      <option value="gemini-4-hydrogen">gemini-4-hydrogen</option>
+      <option value="gemini-3-flash-preview">gemini-3-flash-preview</option>
+      <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+    </select>
+    <button type="button" onclick="guardarApiKey()">💾 Guardar</button>
     <span class="api-status" id="apiStatus"></span>
   </div>
 
@@ -118,8 +124,8 @@
       </div>
 
       <div class="btn-group">
-        <button type="button" class="btn-voice" id="btnVoz">🎤 Dictar por Voz</button>
-        <button type="button" class="btn-primary" id="btnGenerar">✨ Redactar Informe</button>
+        <button type="button" class="btn-voice" id="btnVoz" onclick="toggleDictado()">🎤 Dictar por Voz</button>
+        <button type="button" class="btn-primary" id="btnGenerar" onclick="generarInforme()">✨ Redactar Informe</button>
       </div>
     </div>
 
@@ -127,30 +133,30 @@
       <h2>2. Informe Técnico Redactado (Editable)</h2>
       <div class="output-box" id="resultadoInforme" contenteditable="true">Guardá tu API Key arriba, completá los datos a la izquierda y presioná "Redactar Informe"...</div>
       <div class="btn-group">
-        <button type="button" class="btn-copy" id="btnCopiar">📋 Copiar Informe Listo</button>
+        <button type="button" class="btn-copy" onclick="copiarInforme()">📋 Copiar Informe Listo</button>
       </div>
     </div>
   </div>
 </div>
 
-<script type="module">
-  import { GoogleGenAI } from "https://esm.run/@google/genai";
+<script>
+  window.onload = () => {
+    const savedKey = localStorage.getItem('gemini_api_key_caba');
+    if (savedKey) {
+      document.getElementById('apiKeyInput').value = savedKey;
+      document.getElementById('apiStatus').textContent = '✓ Clave lista';
+    }
+  };
 
-  const savedKey = localStorage.getItem('gemini_api_key_caba');
-  if (savedKey) {
-    document.getElementById('apiKeyInput').value = savedKey;
-    document.getElementById('apiStatus').textContent = '✓ Clave guardada en este dispositivo';
-  }
-
-  document.getElementById('btnGuardarKey').addEventListener('click', () => {
+  function guardarApiKey() {
     const key = document.getElementById('apiKeyInput').value.trim();
     if (!key) {
       alert('Ingresá una API Key válida.');
       return;
     }
     localStorage.setItem('gemini_api_key_caba', key);
-    document.getElementById('apiStatus').textContent = '✓ Clave guardada en este dispositivo';
-  });
+    document.getElementById('apiStatus').textContent = '✓ Clave guardada';
+  }
 
   let recognition;
   let grabando = false;
@@ -176,7 +182,7 @@
     };
   }
 
-  document.getElementById('btnVoz').addEventListener('click', () => {
+  function toggleDictado() {
     if (!recognition) {
       alert('Tu navegador no soporta dictado por voz. Probá con Chrome o Edge.');
       return;
@@ -190,7 +196,7 @@
     } else {
       recognition.stop();
     }
-  });
+  }
 
   const SYSTEM_PROMPT = `Actúa como un Perito Oficial en Accidentología Vial de la Policía de la Ciudad Autónoma de Buenos Aires (CABA), desempeñándote como asistente técnico-redactor judicial. Transforma los datos crudos relevados en el lugar del hecho en un Informe Técnico Pericial formal, riguroso y listo para su elevación judicial.
 
@@ -223,10 +229,10 @@ ESTRUCTURA OBLIGATORIA DEL INFORME (en texto plano limpio, sin asteriscos ni sí
 
 Emite directamente el texto completo del informe sin saludos ni comentarios adicionales.`;
 
-  document.getElementById('btnGenerar').addEventListener('click', async () => {
-    const apiKey = localStorage.getItem('gemini_api_key_caba') || document.getElementById('apiKeyInput').value.trim();
+  async function generarInforme() {
+    const apiKey = document.getElementById('apiKeyInput').value.trim() || localStorage.getItem('gemini_api_key_caba');
     if (!apiKey) {
-      alert('Por favor, pegá y guardá tu API Key de Google AI Studio en la barra superior.');
+      alert('Pegá tu API Key de Google AI Studio en la barra superior.');
       return;
     }
 
@@ -235,6 +241,7 @@ Emite directamente el texto completo del informe sin saludos ni comentarios adic
       return;
     }
 
+    const modelo = document.getElementById('modeloSelect').value;
     const hoy = new Date();
     const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     const fechaHoy = `${hoy.getDate()} de ${meses[hoy.getMonth()]} del ${hoy.getFullYear()}`;
@@ -254,35 +261,47 @@ Relato técnico crudo: ${document.getElementById('datosCrudos').value}
     const btn = document.getElementById('btnGenerar');
     const output = document.getElementById('resultadoInforme');
     btn.disabled = true;
-    btn.textContent = '⏳ Redactando pericia...';
-    output.textContent = 'Conectando con Gemini (gemini-4-hydrogen)...';
+    btn.textContent = '⏳ Redactando...';
+    output.textContent = `Enviando datos a ${modelo}...`;
 
     try {
-      const ai = new GoogleGenAI({ apiKey: apiKey });
-      const response = await ai.models.generateContent({
-        model: "gemini-4-hydrogen",
-        contents: datosUsuario,
-        config: {
-          systemInstruction: SYSTEM_PROMPT,
-          temperature: 0.2
-        }
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          contents: [{ parts: [{ text: datosUsuario }] }],
+          generationConfig: { temperature: 0.2 }
+        })
       });
 
-      output.textContent = response.text;
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        throw new Error(`[HTTP ${response.status}] ${data.error?.message || JSON.stringify(data)}`);
+      }
+
+      const texto = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!texto) {
+        throw new Error('Respuesta vacía del servidor.');
+      }
+
+      output.textContent = texto;
 
     } catch (error) {
-      output.textContent = `Error al conectar con Gemini:\n${error.message}`;
+      output.textContent = `DIAGNÓSTICO DE CONEXIÓN:\n${error.message}\n\nSugerencia: Si el error dice "not found" o "not supported", cambiá el selector de modelo arriba a la derecha (probá con gemini-3-flash-preview o gemini-2.5-flash) y volvé a tocar Redactar.`;
     } finally {
       btn.disabled = false;
       btn.textContent = '✨ Redactar Informe';
     }
-  });
+  }
 
-  document.getElementById('btnCopiar').addEventListener('click', () => {
+  function copiarInforme() {
     const texto = document.getElementById('resultadoInforme').innerText;
     navigator.clipboard.writeText(texto);
     alert('Informe copiado al portapapeles.');
-  });
+  }
 </script>
 
 </body>
