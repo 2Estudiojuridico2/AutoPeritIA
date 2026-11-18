@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html_code = '''<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -19,7 +19,7 @@
     }
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { margin: 0; background: var(--bg); color: var(--text); padding: 14px; }
-    .container { max-width: 1340px; margin: 0 auto; }
+    .container { max-width: 1380px; margin: 0 auto; }
     
     header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 14px; }
     header h1 { font-size: 1.2rem; margin: 0; }
@@ -35,24 +35,32 @@
     .api-bar button { flex: 0 0 auto; padding: 8px 14px; font-size: 0.85rem; background: #334155; color: white; }
     .api-status { font-size: 0.8rem; color: var(--success); }
 
-    .grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 18px; }
-    @media (max-width: 920px) { .grid { grid-template-columns: 1fr; } }
+    .grid { display: grid; grid-template-columns: 1.05fr 1.15fr; gap: 18px; }
+    @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
     
     .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
     .card h2 { font-size: 1rem; margin: 0; color: var(--accent); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     label { font-size: 0.82rem; color: var(--muted); display: block; margin-bottom: 4px; }
-    input, select, textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 9px 10px; font-size: 0.92rem; }
-    textarea { resize: vertical; min-height: 155px; line-height: 1.45; }
+    input, select, textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 8px 10px; font-size: 0.9rem; }
+    textarea { resize: vertical; min-height: 95px; line-height: 1.45; }
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
     .row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+    /* Sub-solapas internas del Editor de Carga */
+    .sub-tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--border); padding-bottom: 8px; flex-wrap: wrap; }
+    .sub-btn { background: #0f172a; color: var(--muted); border: 1px solid var(--border); padding: 7px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer; flex: 1; min-width: 115px; }
+    .sub-btn.active { background: #2563eb; color: white; border-color: #3b82f6; }
+
+    .vehiculo-box { background: #131c31; border: 1px solid var(--border); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+    .vehiculo-header { display: flex; justify-content: space-between; align-items: center; color: #60a5fa; font-weight: bold; font-size: 0.9rem; }
 
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
     .chip { background: #0f172a; border: 1px solid #334155; color: #cbd5e1; padding: 5px 10px; border-radius: 20px; font-size: 0.78rem; cursor: pointer; transition: 0.15s; }
     .chip:hover { border-color: var(--accent); color: white; }
 
     .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
-    button { flex: 1; padding: 10px 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.86rem; transition: 0.2s; min-width: 110px; }
+    button { flex: 1; padding: 10px 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.86rem; transition: 0.2s; min-width: 105px; }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-primary { background: var(--accent); color: white; }
     .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
@@ -60,14 +68,14 @@
     .btn-voice.recording { background: var(--danger); animation: pulse 1.2s infinite; }
     .btn-success { background: var(--success); color: #064e3b; }
     .btn-warning { background: var(--warning); color: #451a03; }
-    .btn-danger { background: var(--danger); color: white; flex: 0 0 auto; padding: 6px 10px; min-width: auto; font-size: 0.8rem; }
+    .btn-danger { background: var(--danger); color: white; flex: 0 0 auto; padding: 5px 9px; min-width: auto; font-size: 0.78rem; }
 
     .paper-sheet {
       background: #ffffff;
       color: #000000;
       padding: 36px 20px 24px 48px;
       border-radius: 6px;
-      min-height: 540px;
+      min-height: 560px;
       font-family: "Times New Roman", Times, serif;
       font-size: 12pt;
       line-height: 1.5;
@@ -89,6 +97,9 @@
     .db-info strong { color: var(--accent); font-size: 0.95rem; }
     .db-info p { margin: 4px 0 0; font-size: 0.82rem; color: var(--muted); }
 
+    .checkbox-inline { display: flex; align-items: center; gap: 8px; font-size: 0.84rem; color: var(--text); cursor: pointer; margin-top: 6px; }
+    .checkbox-inline input { width: auto; margin: 0; }
+
     .hidden { display: none !important; }
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
   </style>
@@ -109,7 +120,7 @@
     <button class="tab-btn" onclick="cambiarTab('anexo', this)">📷 2. Anexo I Fotos (<span id="fotoCount">0</span>)</button>
     <button class="tab-btn" onclick="cambiarTab('elevacion', this)">📨 3. Nota de Elevación</button>
     <button class="tab-btn" onclick="cambiarTab('plantillas', this)">⚙️ 4. Textos Genéricos</button>
-    <button class="tab-btn" onclick="cambiarTab('basedatos', this)">🗄️ 5. Base de Datos</button>
+    <button class="tab-btn" onclick="cambiarTab('basedatos', this)">🗄️ 5. Base de Datos / Sync</button>
   </div>
 
   <div class="api-bar">
@@ -123,87 +134,155 @@
     <span class="api-status" id="apiStatus"></span>
   </div>
 
-  <!-- PESTAÑA 1: INFORME -->
+  <!-- PESTAÑA 1: EDITOR PRINCIPAL DEL INFORME -->
   <div id="tab-editor" class="grid">
     <div class="card">
       <h2>
-        <span>Datos Fácticos Relevados</span>
+        <span>Relevamiento Pericial por Ítems</span>
         <button type="button" class="btn-danger" onclick="nuevoInforme()">+ Nuevo / Limpiar</button>
       </h2>
-      
-      <div class="row-3">
-        <div>
-          <label>N° Informe Técnico</label>
-          <input type="text" id="numInforme" placeholder="Ej: 7867" oninput="actualizarNotaElevacion()">
+
+      <!-- Sub-solapas ordenadas: Datos Generales | Inspección Ocular | Vehículos y Daños -->
+      <div class="sub-tabs">
+        <button type="button" class="sub-btn active" onclick="cambiarSubTab('generales', this)">1. Sumario y Fecha</button>
+        <button type="button" class="sub-btn" onclick="cambiarSubTab('ocular', this)">2. Inspección Ocular</button>
+        <button type="button" class="sub-btn" onclick="cambiarSubTab('vehiculos', this)">3. Vehículos y Daños (<span id="vehiculosCount">1</span>)</button>
+      </div>
+
+      <!-- SUB-SOLAPA 1: DATOS GENERALES Y FECHA -->
+      <div id="sub-generales">
+        <div class="row-3">
+          <div>
+            <label>N° Informe Técnico</label>
+            <input type="text" id="numInforme" placeholder="Ej: 7867" oninput="actualizarNotaElevacion()">
+          </div>
+          <div>
+            <label>Sumario / Actuaciones</label>
+            <input type="text" id="sumario" placeholder="Ej: 720491" oninput="actualizarNotaElevacion()">
+          </div>
+          <div>
+            <label>Comisaría Vecinal</label>
+            <input type="text" id="comisaria" placeholder="Ej: 10B" oninput="actualizarNotaElevacion()">
+          </div>
         </div>
-        <div>
-          <label>Sumario / Actuaciones</label>
-          <input type="text" id="sumario" placeholder="Ej: 720491" oninput="actualizarNotaElevacion()">
+
+        <div class="row-3" style="margin-top:8px;">
+          <div>
+            <label>Fiscalía (UFLA)</label>
+            <select id="fiscalia" onchange="actualizarNotaElevacion()">
+              <option value="OESTE">UFLA OESTE</option>
+              <option value="NORTE">UFLA NORTE</option>
+              <option value="SUR">UFLA SUR</option>
+              <option value="ESTE">UFLA ESTE</option>
+            </select>
+          </div>
+          <div>
+            <label>Carátula</label>
+            <input type="text" id="caratula" value="LESIONES CULPOSAS" oninput="actualizarNotaElevacion()">
+          </div>
+          <div>
+            <label>Hora de Arribo</label>
+            <input type="time" id="horaArribo">
+          </div>
         </div>
-        <div>
-          <label>Comisaría Vecinal</label>
-          <input type="text" id="comisaria" placeholder="Ej: 10B" oninput="actualizarNotaElevacion()">
+
+        <div style="margin-top:8px; background:#131c31; padding:10px; border-radius:8px; border:1px solid var(--border);">
+          <label>Fecha del Escrito del Informe Técnico:</label>
+          <div class="row-2">
+            <input type="date" id="fechaInformeInput">
+            <label class="checkbox-inline">
+              <input type="checkbox" id="usarFechaSistema" checked onchange="toggleFechaSistema()">
+              <span>Usar fecha actual del sistema</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <label>Efectivo de Consigna (Jerarquía, Nombre, LP y Dependencia):</label>
+          <input type="text" id="consigna" placeholder="Ej: Inspector Jorge Antúnez, LP 18691, numerario de la Comisaría Vecinal 10B">
         </div>
       </div>
 
-      <div class="row-3">
+      <!-- SUB-SOLAPA 2: INSPECCIÓN OCULAR DEL ESCENARIO -->
+      <div id="sub-ocular" class="hidden">
         <div>
-          <label>Fiscalía (UFLA)</label>
-          <select id="fiscalia" onchange="actualizarNotaElevacion()">
-            <option value="OESTE">UFLA OESTE</option>
-            <option value="NORTE">UFLA NORTE</option>
-            <option value="SUR">UFLA SUR</option>
-            <option value="ESTE">UFLA ESTE</option>
-          </select>
+          <label>Lugar del Relevamiento (Calle/Intersección y Sentido en CABA):</label>
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="lugarHecho" placeholder="Ej: Av. General Paz (sentido Sur) y bajada Nasarre" oninput="actualizarNotaElevacion()">
+            <button type="button" style="flex:0 0 auto; width:auto; padding:0 12px; background:#334155; color:white;" onclick="obtenerGPS()">📍 GPS</button>
+          </div>
         </div>
-        <div>
-          <label>Carátula</label>
-          <input type="text" id="caratula" value="LESIONES ART. 94 del C.P.N." oninput="actualizarNotaElevacion()">
+
+        <div class="row-3" style="margin-top:8px;">
+          <div>
+            <label>Estado de Calzada</label>
+            <select id="ocularCalzada">
+              <option value="calzada asfáltica en condiciones operativas y seca">Asfáltica operativa y seca</option>
+              <option value="calzada asfáltica en condiciones operativas y húmeda">Asfáltica operativa y húmeda</option>
+              <option value="calzada de hormigón en condiciones operativas">Hormigón operativa</option>
+              <option value="calzada con deterioro superficial">Con deterioro superficial</option>
+            </select>
+          </div>
+          <div>
+            <label>Iluminación</label>
+            <select id="ocularLuz">
+              <option value="iluminación natural diurna">Natural diurna</option>
+              <option value="iluminación artificial funcional">Artificial funcional</option>
+              <option value="iluminación artificial deficiente">Artificial deficiente</option>
+              <option value="escasa visibilidad nocturna">Escasa visibilidad nocturna</option>
+            </select>
+          </div>
+          <div>
+            <label>Preservación de Escena</label>
+            <select id="ocularEscena">
+              <option value="removida">Removida al arribo</option>
+              <option value="preservada">Preservada sin alterar</option>
+              <option value="parcial">Parcialmente removida</option>
+            </select>
+          </div>
         </div>
-        <div>
-          <label>Hora de Arribo</label>
-          <input type="time" id="horaArribo">
+
+        <div style="margin-top:8px;">
+          <label>Observaciones de Inspección Ocular, Huellas y Vestigios en Calzada:</label>
+          <textarea id="ocularDetalle" placeholder="Describí traza, carriles, señalización, huellas de frenado/derrape, restos plásticos, vidrios, fluidos o ausencia de vestigios..."></textarea>
+        </div>
+
+        <div class="chips" style="margin-top:6px;">
+          <span class="chip" onclick="insertarEnCampo('ocularDetalle', 'Se hace constar que la escena principal se hallaba removida en su emplazamiento posimpacto al momento del arribo del personal pericial, motivo por el cual no se evaluaron vestigios estáticos sobre la calzada.')">+ Escena removida sin vestigios</span>
+          <span class="chip" onclick="insertarEnCampo('ocularDetalle', 'Se constataron restos vítreos y fragmentos plásticos dispersos sobre la calzada.')">+ Restos vítreos/plásticos</span>
+          <span class="chip" onclick="insertarEnCampo('ocularDetalle', 'Se relevó huella de frenado rectilínea sobre la calzada.')">+ Huella de frenado</span>
         </div>
       </div>
 
+      <!-- SUB-SOLAPA 3: VEHÍCULOS Y DAÑOS (DINÁMICO: 1, 2, 3...) -->
+      <div id="sub-vehiculos" class="hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-size:0.84rem; color:var(--muted);">Agregá únicamente los rodados inspeccionados (1, 2, 3...):</span>
+          <button type="button" class="btn-success" style="flex:0 0 auto; padding:6px 12px; font-size:0.82rem;" onclick="agregarVehiculo()">+ Agregar Vehículo</button>
+        </div>
+        <div id="contenedorVehiculos"></div>
+      </div>
+
+      <!-- Dictado por voz general o notas extra -->
       <div>
-        <label>Lugar del Hecho (CABA) y Efectivo de Consigna</label>
-        <div style="display:flex; gap:6px;">
-          <input type="text" id="lugarConsigna" placeholder="Ej: Av. General Paz (sentido Sur) y bajada Nasarre - Insp. Jorge Antúnez LP 18691" oninput="actualizarNotaElevacion()">
-          <button type="button" style="flex:0 0 auto; width:auto; padding:0 12px; background:#334155; color:white;" onclick="obtenerGPS()">📍 GPS</button>
-        </div>
-      </div>
-
-      <div>
-        <label>Inserción Rápida (Toque para agregar):</label>
-        <div class="chips">
-          <span class="chip" onclick="insertarChip('Calzada asfáltica en condiciones operativas y seca.')">+ Calzada operativa/seca</span>
-          <span class="chip" onclick="insertarChip('Iluminación natural diurna.')">+ Luz diurna</span>
-          <span class="chip" onclick="insertarChip('Iluminación artificial funcional.')">+ Luz artificial</span>
-          <span class="chip" onclick="insertarChip('Se hace constar que la escena principal se hallaba removida en su emplazamiento posimpacto al momento del arribo del personal pericial, motivo por el cual no se evaluaron vestigios estáticos sobre la calzada.')">+ Escena removida</span>
-          <span class="chip" onclick="insertarChip('Los sistemas de seguridad activa y pasiva evaluados estáticamente se hallaban en condiciones operativas.')">+ Sistemas seg. operativos</span>
-          <span class="chip" onclick="insertarChip('Por carecer de llave de ignición, no se pudieron verificar los sistemas electromecánicos ni instrumentales.')">+ Sin llave ignición</span>
-        </div>
-      </div>
-
-      <div>
-        <label>Relato Crudo (Solo los vehículos peritados y lo constatado):</label>
-        <textarea id="datosCrudos" placeholder="Dictá o escribí únicamente los datos constatados (1, 2, 3 o más vehículos)..."></textarea>
+        <label>Notas Adicionales / Dictado por Voz en Vía Pública:</label>
+        <textarea id="notasExtra" style="min-height:68px;" placeholder="Dictá por voz observaciones rápidas o detalles extra para que Gemini integre en la redacción..."></textarea>
       </div>
 
       <div class="btn-group">
         <button type="button" class="btn-voice" id="btnVoz" onclick="toggleDictado()">🎤 Dictar por Voz</button>
-        <button type="button" class="btn-primary" id="btnGenerar" onclick="generarInforme()">✨ Redactar Informe</button>
+        <button type="button" class="btn-primary" id="btnGenerar" onclick="generarInforme()">✨ Redactar Informe Completo</button>
       </div>
     </div>
 
+    <!-- VISTA PREVIA DERECHA -->
     <div class="card">
       <h2>
-        <span>Vista Previa (Interlineado 1.5 • Sangría 1ª Línea • Márgenes 3/1/4/2 cm)</span>
+        <span>Vista Previa Oficial (Interlineado 1.5 • Sangría 1ª Línea • Márgenes 3/1/4/2 cm)</span>
       </h2>
       <div class="paper-sheet" id="hojaOficial">
         <div class="first-page-banner" id="bannerPrimeraPagina"></div>
-        <div class="body-content" id="resultadoInforme" contenteditable="true" oninput="recalcularFojasTotales()">Completá los datos a la izquierda y presioná "Redactar Informe"...</div>
+        <div class="body-content" id="resultadoInforme" contenteditable="true" oninput="recalcularFojasTotales()">Completá los datos por solapas a la izquierda y presioná "Redactar Informe Completo"...</div>
       </div>
 
       <div class="btn-group">
@@ -259,24 +338,36 @@
     <div class="photo-grid" id="galeriaFotos"></div>
   </div>
 
-  <!-- PESTAÑA 3: NOTA DE ELEVACIÓN -->
+  <!-- PESTAÑA 3: NOTA DE ELEVACIÓN (SIN FIRMA Y CON FECHA LIBRE) -->
   <div id="tab-elevacion" class="card hidden">
     <h2>
-      <span>Nota de Elevación a Fiscalía (Frente a frente • No cuenta como foja útil del informe)</span>
+      <span>Nota de Elevación a Fiscalía (Sin firma del perito • Fecha libre editable • No suma foja)</span>
       <div style="display:flex; gap:8px;">
         <button type="button" class="btn-primary" style="padding:7px 12px; font-size:0.85rem;" onclick="descargarWordElevacion()">📨 Descargar Nota (.doc)</button>
         <button type="button" class="btn-warning" style="padding:7px 12px; font-size:0.85rem;" onclick="imprimirElevacion()">🖨️ Imprimir Nota</button>
       </div>
     </h2>
-    <div class="row-2">
+    <div class="row-4">
       <div>
-        <label>Fojas Útiles Totales Detectadas (Solo frentes: Cuerpo + Anexo):</label>
+        <label>Día (dejar vacío para completar a mano):</label>
+        <input type="text" id="elevDia" placeholder="____" oninput="actualizarNotaElevacion()">
+      </div>
+      <div>
+        <label>Mes (dejar vacío para completar a mano):</label>
+        <input type="text" id="elevMes" placeholder="____________" oninput="actualizarNotaElevacion()">
+      </div>
+      <div>
+        <label>Año:</label>
+        <input type="text" id="elevAnio" value="2026" oninput="actualizarNotaElevacion()">
+      </div>
+      <div>
+        <label>Fojas Útiles (Solo frentes: Informe + Anexo):</label>
         <input type="number" id="cantFojas" value="2" min="1" max="50" oninput="actualizarNotaElevacion()">
       </div>
-      <div>
-        <label>Detalle por renglón (Vehículos peritados y Lugar de Relevamiento):</label>
-        <textarea id="elevacionResumenVehiculos" style="min-height:85px;" oninput="actualizarNotaElevacion()"></textarea>
-      </div>
+    </div>
+    <div>
+      <label>Detalle por renglón (Vehículos peritados y Lugar de Relevamiento):</label>
+      <textarea id="elevacionResumenVehiculos" style="min-height:75px;" oninput="actualizarNotaElevacion()"></textarea>
     </div>
     <div class="paper-sheet simetrica" id="hojaElevacion">
       <div class="first-page-banner" id="bannerElevacion"></div>
@@ -290,11 +381,8 @@
       <span>Configuración de Textos Genéricos</span>
       <button type="button" class="btn-success" style="flex:0 0 auto;" onclick="guardarPlantillasGenericas()">💾 Guardar Configuración</button>
     </h2>
-    <p style="font-size:0.85rem; color:var(--muted); margin:0;">
-      <strong>Formato oficial activo:</strong> Informe Técnico con márgenes asimétricos (<strong>Izq 3 cm / Der 1 cm / Sup 4 cm / Inf 2 cm</strong>), interlineado <strong>1.5</strong>, sangría de primera línea <strong>1.25 cm</strong> y encabezado solo en primera hoja.
-    </p>
     <div>
-      <label>Encabezado Institucional (1ª Página del Informe, Nota de Elevación y Anexo I):</label>
+      <label>Encabezado Institucional:</label>
       <textarea id="tplEncabezado" style="min-height:85px;"></textarea>
     </div>
     <div>
@@ -306,23 +394,27 @@
       <textarea id="tplRemision" style="min-height:95px;"></textarea>
     </div>
     <div>
-      <label>Pie de Firma Compacto (Times New Roman 10 pt):</label>
+      <label>Pie de Firma del Informe Técnico (No se incluye en Nota de Elevación):</label>
       <textarea id="tplFirma" style="min-height:75px;"></textarea>
     </div>
   </div>
 
-  <!-- PESTAÑA 5: BASE DE DATOS -->
+  <!-- PESTAÑA 5: BASE DE DATOS Y SINCRONIZACIÓN CELULAR <-> PC -->
   <div id="tab-basedatos" class="card hidden">
     <h2>
-      <span>Base Data Local de Pericias</span>
-      <div style="display:flex; gap:8px;">
-        <button type="button" style="padding:6px 12px; font-size:0.8rem; background:#334155; color:white;" onclick="exportarBackupJSON()">⬇️ Backup</button>
-        <label style="padding:6px 12px; font-size:0.8rem; background:#334155; color:white; border-radius:6px; cursor:pointer; margin:0;">
-          ⬆️ Restaurar
+      <span>Base de Datos Local y Sincronización Celular ⇄ PC</span>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button type="button" class="btn-success" style="padding:7px 12px; font-size:0.82rem; min-width:auto;" onclick="exportarBackupJSON()">⬇️ Exportar Backup (.json)</button>
+        <button type="button" class="btn-primary" style="padding:7px 12px; font-size:0.82rem; min-width:auto;" onclick="compartirBackupMovil()">📲 Enviar Backup por WhatsApp / Mail</button>
+        <label style="padding:7px 12px; font-size:0.82rem; background:#334155; color:white; border-radius:6px; cursor:pointer; margin:0;">
+          ⬆️ Importar Backup en PC
           <input type="file" accept=".json" style="display:none;" onchange="importarBackupJSON(event)">
         </label>
       </div>
     </h2>
+    <p style="font-size:0.84rem; color:var(--muted); margin:0;">
+      <strong>¿Trabajaste en la vía pública desde el celular?</strong> Tocá <em>"Enviar Backup por WhatsApp / Mail"</em> desde tu teléfono, abrí el archivo en tu PC y cargalo con <em>"Importar Backup en PC"</em> para ver todos tus informes y fotos al instante.
+    </p>
     <input type="text" id="buscadorDB" placeholder="🔍 Buscar por N° de Informe, Sumario, Patente o Calle..." onkeyup="renderizarBD()">
     <div class="db-list" id="listaBD"></div>
   </div>
@@ -337,7 +429,7 @@
   };
 
   function getTemplates() {
-    return JSON.parse(localStorage.getItem('pericias_caba_templates_v4') || 'null') || DEFAULT_TEMPLATES;
+    return JSON.parse(localStorage.getItem('pericias_caba_templates_v5') || 'null') || DEFAULT_TEMPLATES;
   }
 
   function cargarPlantillasGenericas() {
@@ -356,9 +448,9 @@
       remision: document.getElementById('tplRemision').value.trim(),
       firma: document.getElementById('tplFirma').value.trim()
     };
-    localStorage.setItem('pericias_caba_templates_v4', JSON.stringify(data));
+    localStorage.setItem('pericias_caba_templates_v5', JSON.stringify(data));
     actualizarBanners();
-    alert('Configuración de textos genéricos guardada.');
+    alert('Configuración guardada.');
   }
 
   function actualizarBanners() {
@@ -370,6 +462,111 @@
     document.getElementById('bannerElevacion').innerHTML = htmlBanner;
   }
 
+  // ==========================================
+  // GESTIÓN DINÁMICA DE VEHÍCULOS (1, 2, 3...)
+  // ==========================================
+  let vehiculosList = [
+    { tipo: '', marcaModelo: '', dominio: '', posicionFinal: '', danos: '', sistemas: 'Los sistemas de seguridad activa y pasiva evaluados estáticamente se hallaban en condiciones operativas.' }
+  ];
+
+  function renderizarVehiculos() {
+    document.getElementById('vehiculosCount').textContent = vehiculosList.length;
+    const cont = document.getElementById('contenedorVehiculos');
+    cont.innerHTML = '';
+
+    vehiculosList.forEach((v, idx) => {
+      const box = document.createElement('div');
+      box.className = 'vehiculo-box';
+      box.innerHTML = `
+        <div class="vehiculo-header">
+          <span>VEHÍCULO ${idx + 1}</span>
+          ${vehiculosList.length > 1 ? `<button type="button" class="btn-danger" onclick="eliminarVehiculo(${idx})">Quitar</button>` : ''}
+        </div>
+        <div class="row-3">
+          <div>
+            <label>Tipo de Unidad</label>
+            <input type="text" value="${v.tipo}" placeholder="Ej: Automóvil / Motovehículo" oninput="vehiculosList[${idx}].tipo = this.value; sincronizarResumenVehiculos();">
+          </div>
+          <div>
+            <label>Marca y Modelo</label>
+            <input type="text" value="${v.marcaModelo}" placeholder="Ej: Volkswagen Gol" oninput="vehiculosList[${idx}].marcaModelo = this.value; sincronizarResumenVehiculos();">
+          </div>
+          <div>
+            <label>Dominio Colocado</label>
+            <input type="text" value="${v.dominio}" placeholder="Ej: LSS546" oninput="vehiculosList[${idx}].dominio = this.value; sincronizarResumenVehiculos();">
+          </div>
+        </div>
+        <div>
+          <label>Posición Final y Orientación</label>
+          <input type="text" value="${v.posicionFinal}" placeholder="Ej: Detenido sobre calzada orientado hacia el sentido Sur" oninput="vehiculosList[${idx}].posicionFinal = this.value;">
+        </div>
+        <div>
+          <label>Daños Estructurales y Vestigios Constatados</label>
+          <textarea style="min-height:65px;" placeholder="Describí deformaciones, roces, transferencias, desprendimientos..." oninput="vehiculosList[${idx}].danos = this.value;">${v.danos}</textarea>
+        </div>
+        <div>
+          <label>Sistemas de Seguridad / Estado Mecánico</label>
+          <input type="text" value="${v.sistemas}" oninput="vehiculosList[${idx}].sistemas = this.value;">
+        </div>
+      `;
+      cont.appendChild(box);
+    });
+    sincronizarResumenVehiculos();
+  }
+
+  function agregarVehiculo() {
+    vehiculosList.push({
+      tipo: '', marcaModelo: '', dominio: '', posicionFinal: '', danos: '',
+      sistemas: 'Los sistemas de seguridad activa y pasiva evaluados estáticamente se hallaban en condiciones operativas.'
+    });
+    renderizarVehiculos();
+  }
+
+  function eliminarVehiculo(idx) {
+    vehiculosList.splice(idx, 1);
+    renderizarVehiculos();
+  }
+
+  function sincronizarResumenVehiculos() {
+    const lineas = vehiculosList.map((v, i) => {
+      const desc = [v.tipo, v.marcaModelo, v.dominio ? `dominio colocado ${v.dominio}` : ''].filter(Boolean).join(' ');
+      return `VEHÍCULO ${i + 1}: ${desc || '[Completar]'}.`;
+    });
+    const lugar = document.getElementById('lugarHecho').value.trim();
+    lineas.push(`LUGAR DEL RELEVAMIENTO: ${lugar || '[Completar]'}.`);
+    document.getElementById('elevacionResumenVehiculos').value = lineas.join('\n');
+    actualizarNotaElevacion();
+  }
+
+  // ==========================================
+  // FECHA DEL SISTEMA O MANUAL
+  // ==========================================
+  function toggleFechaSistema() {
+    const usarSys = document.getElementById('usarFechaSistema').checked;
+    const inputDate = document.getElementById('fechaInformeInput');
+    if (usarSys) {
+      const hoy = new Date();
+      inputDate.value = hoy.toISOString().slice(0, 10);
+      inputDate.disabled = true;
+    } else {
+      inputDate.disabled = false;
+    }
+  }
+
+  function obtenerFechaFormateadaInforme() {
+    const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    const val = document.getElementById('fechaInformeInput').value;
+    if (!val) {
+      const hoy = new Date();
+      return `${hoy.getDate()} de ${meses[hoy.getMonth()]} del ${hoy.getFullYear()}`;
+    }
+    const [anio, mes, dia] = val.split('-');
+    return `${parseInt(dia, 10)} de ${meses[parseInt(mes, 10) - 1]} del ${anio}`;
+  }
+
+  // ==========================================
+  // BASE DE DATOS INDEXEDDB Y NAVEGACIÓN
+  // ==========================================
   let db;
   let fotosAnexo = [];
   let informeActualId = null;
@@ -392,8 +589,9 @@
       document.getElementById('apiKeyInput').value = savedKey;
       document.getElementById('apiStatus').textContent = '✓ Clave lista';
     }
+    toggleFechaSistema();
     cargarPlantillasGenericas();
-    document.getElementById('elevacionResumenVehiculos').value = `VEHÍCULO 1: [Completar]\nLUGAR DEL RELEVAMIENTO: [Completar]`;
+    renderizarVehiculos();
     actualizarNotaElevacion();
   };
 
@@ -415,21 +613,30 @@
     if (tab === 'elevacion') actualizarNotaElevacion();
   }
 
-  function insertarChip(texto) {
-    const area = document.getElementById('datosCrudos');
+  function cambiarSubTab(sub, btnEl) {
+    ['generales', 'ocular', 'vehiculos'].forEach(s => {
+      document.getElementById(`sub-${s}`).classList.add('hidden');
+    });
+    document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`sub-${sub}`).classList.remove('hidden');
+    if (btnEl) btnEl.classList.add('active');
+  }
+
+  function insertarEnCampo(idCampo, texto) {
+    const area = document.getElementById(idCampo);
     area.value += (area.value && !area.value.endsWith(' ') ? ' ' : '') + texto;
   }
 
   function obtenerGPS() {
     if (!navigator.geolocation) return alert('GPS no disponible.');
-    const input = document.getElementById('lugarConsigna');
+    const input = document.getElementById('lugarHecho');
     const prev = input.value;
     input.value = 'Obteniendo GPS...';
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const coords = `(GPS: ${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)})`;
         input.value = prev ? `${prev} ${coords}` : coords;
-        actualizarNotaElevacion();
+        sincronizarResumenVehiculos();
       },
       () => { input.value = prev; alert('Permiso de GPS denegado.'); }
     );
@@ -445,7 +652,7 @@
     recognition.interimResults = false;
     recognition.onresult = (event) => {
       const texto = event.results[event.results.length - 1][0].transcript;
-      const area = document.getElementById('datosCrudos');
+      const area = document.getElementById('notasExtra');
       area.value += (area.value ? ' ' : '') + texto;
     };
     recognition.onend = () => {
@@ -469,25 +676,38 @@
     }
   }
 
+  // ==========================================
+  // GENERACIÓN CON GEMINI (SINTAXIS Y ORTOGRAFÍA SIN REDUCIR DATOS)
+  // ==========================================
   async function generarInforme() {
     const apiKey = document.getElementById('apiKeyInput').value.trim() || localStorage.getItem('gemini_api_key_caba');
     if (!apiKey) return alert('Pegá tu API Key de Google AI Studio arriba.');
-    if (!document.getElementById('datosCrudos').value.trim()) return alert('Cargá o dictá los datos del relevamiento.');
 
     const tpls = getTemplates();
-    const SYSTEM_PROMPT = `Actúa como un Perito Oficial en Accidentología Vial de la Policía de la Ciudad Autónoma de Buenos Aires (CABA). Transforma los datos crudos relevados en un Informe Técnico Pericial formal.
+    const fechaEscrito = obtenerFechaFormateadaInforme();
 
-REGLA SUPREMA DE FIDELIDAD FÁCTICA Y CANTIDAD DE VEHÍCULOS (PROHIBIDO INVENTAR O DEDUCIR):
-- Redacta ÚNICAMENTE con los datos explícitos proporcionados por el usuario.
-- Si el relato menciona UN (1) solo vehículo, lista ÚNICAMENTE "VEHÍCULO 1" y NUNCA agregues "VEHÍCULO 2". Si menciona TRES (3) o más vehículos, numéralos correlativamente: "VEHÍCULO 1", "VEHÍCULO 2", "VEHÍCULO 3", etc.
-- NO infieras ni supongas estado de frenos, luces, neumáticos, clima ni daños no escritos.
-- Si falta un dato administrativo obligatorio, escribe exactamente "[Completar]".
+    const bloquesVehiculos = vehiculosList.map((v, i) => `
+VEHÍCULO ${i + 1}:
+- Tipo: ${v.tipo || '[Completar]'}
+- Marca y Modelo: ${v.marcaModelo || '[Completar]'}
+- Dominio colocado: ${v.dominio || '[Completar]'}
+- Posición final: ${v.posicionFinal || 'No consignada'}
+- Daños constatados: ${v.danos || 'Sin daños constatados'}
+- Sistemas de seguridad / mecánica: ${v.sistemas || 'No evaluados'}
+`).join('\n');
 
-TEXTOS GENÉRICOS OBLIGATORIOS:
-- En OBJETOS DE LA INSPECCIÓN escribe literalmente:
+    const SYSTEM_PROMPT = `Actúa como un Perito Oficial en Accidentología Vial de la Policía de la Ciudad Autónoma de Buenos Aires (CABA). Tu función es redactar el Informe Técnico Pericial mejorando la sintaxis, cohesión técnica y ortografía, SIN REDUCIR NI OMITIR NINGÚN DATO técnico proporcionado.
+
+REGLAS ESTRICTAS DE FIDELIDAD Y CANTIDAD DE VEHÍCULOS:
+1. NO resumas ni recortes información: desarrolla íntegramente todos los detalles de inspección ocular, posición final, daños y sistemas aportados.
+2. Cantidad exacta de vehículos: Se proporcionan exactamente ${vehiculosList.length} vehículo(s). Si hay 1 vehículo, redacta ÚNICAMENTE "VEHÍCULO 1" (prohibido agregar VEHÍCULO 2). Si hay 2, 3 o más, numéralos correlativamente (VEHÍCULO 1, VEHÍCULO 2, VEHÍCULO 3...).
+3. NO inventes datos técnicos no mencionados. Si falta un dato administrativo obligatorio, escribe "[Completar]".
+
+TEXTOS GENÉRICOS LITERALES OBLIGATORIOS:
+- En OBJETOS DE LA INSPECCIÓN:
 ${tpls.objetos}
 
-- En el párrafo de remisión dentro de CONCLUSIÓN escribe literalmente:
+- En el párrafo de remisión dentro de CONCLUSIÓN:
 ${tpls.remision}
 
 - Al final del informe NO incluyas firma; termina exactamente con:
@@ -496,49 +716,63 @@ Es todo cuanto tengo para informar.-
 DATOS FIJOS DEL PERITO:
 Oficial Mayor, Legajo N° 11500, Lionel Nicolás ZURITA, Técnico Superior en Criminalística con especialización en Accidentología Vial, numerario de la Sección Investigación Científica Vial, dependiente de la División Ingeniería Vial, Superintendencia de Policía Científica POLICÍA DE LA CIUDAD DE BUENOS AIRES.
 
-ORDEN EXACTO DE ENCABEZADO DEL INFORME (SIN membrete superior y SIN asteriscos ni numerales Markdown):
+ESTRUCTURA Y ORDEN OBLIGATORIO (SIN membrete superior y SIN asteriscos ni numerales Markdown):
 INFORME TÉCNICO N° [XXXX]/2026.
-Ciudad Autónoma de Buenos Aires, [Fecha].
+Ciudad Autónoma de Buenos Aires, ${fechaEscrito}.
 
 AL SEÑOR JEFE DE SECCIÓN INVESTIGACIÓN CIENTÍFICA VIAL.
 S......................./.......................D.
 
-[Párrafo introductorio completo con sumario, comisaría, carátula, fiscalía y enumeración exacta de los rodados peritados]
+[Párrafo introductorio completo siguiendo exactamente el modelo: "Quien suscribe, Oficial Mayor, Legajo N° 11500, Lionel Nicolás ZURITA... tiene el agrado de dirigirse a Ud. en el marco de las actuaciones sumariales N° ..., instruidas por la Comisaría Vecinal ..., caratuladas: ..., con intervención de la Unidad Fiscal UFLA .... Atento a lo ordenado por el magistrado actuante, se procede a efectuar el presente Informe Técnico sobre los siguientes rodados: ..."]
 
 OBJETOS DE LA INSPECCIÓN
 [Texto genérico]
 
 ELEMENTOS OFRECIDOS PARA ESTUDIO
 • VEHÍCULO 1: ...
-(y solo si existen más vehículos en el relato: • VEHÍCULO 2: ..., etc.)
+(y solo si existen más vehículos: • VEHÍCULO 2: ..., etc.)
 • LUGAR DEL RELEVAMIENTO: ...
 
 DILIGENCIAS PRACTICADAS
-[Relato de comisión, arribo, consigna, escenario y examen técnico analítico]
+[Párrafo de comisión por Sala de Situación, arribo en fecha y hora, entrevista con consigna policial]
+Relevamiento del Escenario e Infraestructura Vial:
+[Redacción técnica completa de todos los datos de Inspección Ocular aportados]
+Tras la correspondiente fijación fotográfica de los rodados, se procedió al examen técnico analítico de las unidades:
+• VEHÍCULO 1 (...): [Descripción completa y detallada de posición final, daños y sistemas]
+(y sucesivos vehículos si los hubiera)
+La totalidad de las constataciones periciales fueron practicadas sobre las unidades inmovilizadas en el lugar de relevamiento.
 
 CONCLUSIÓN
-[Análisis técnico estricto]
-Las descripciones vertidas en el presente cuerpo del informe recogen la totalidad de los daños y vestigios constatados en el lugar. Se adjunta el correspondiente Anexo I (Plantilla Fotográfica Ilustrativa) en foja aparte.-
+[Análisis técnico estricto de compatibilidad física y mecánica de los daños constatados]
+Las descripciones vertidas en el presente cuerpo del informe recogen la totalidad de los daños y vestigios constatados en el lugar. Se adjunta el correspondiente anexo fotográfico ilustrativo.-
 [Texto genérico de remisión]
 Es todo cuanto tengo para informar.-`;
 
-    const modelo = document.getElementById('modeloSelect').value;
-    const hoy = new Date();
-    const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-    const fechaHoy = `${hoy.getDate()} de ${meses[hoy.getMonth()]} del ${hoy.getFullYear()}`;
-
     const datosUsuario = `
-Fecha actual: ${fechaHoy}
+Fecha del informe: ${fechaEscrito}
 N° Informe Técnico: ${document.getElementById('numInforme').value || '[Completar]'}
-Sumario: ${document.getElementById('sumario').value || 'N/A'}
+Sumario: ${document.getElementById('sumario').value || '[Completar]'}
 Comisaría Vecinal: ${document.getElementById('comisaria').value || '[Completar]'}
 Fiscalía: UFLA ${document.getElementById('fiscalia').value}
-Carátula: ${document.getElementById('caratula').value || 'LESIONES ART. 94 del C.P.N.'}
+Carátula: ${document.getElementById('caratula').value || 'LESIONES CULPOSAS'}
 Hora de arribo: ${document.getElementById('horaArribo').value || '[Completar]'}
-Lugar del hecho y Efectivo de consigna: ${document.getElementById('lugarConsigna').value || '[Completar]'}
-Relato técnico crudo: ${document.getElementById('datosCrudos').value}
+Consigna policial: ${document.getElementById('consigna').value || '[Completar]'}
+
+INSPECCIÓN OCULAR DEL ESCENARIO:
+- Lugar del relevamiento: ${document.getElementById('lugarHecho').value || '[Completar]'}
+- Calzada: ${document.getElementById('ocularCalzada').value}
+- Iluminación: ${document.getElementById('ocularLuz').value}
+- Estado de preservación de escena: ${document.getElementById('ocularEscena').value}
+- Detalles y vestigios observados en inspección ocular: ${document.getElementById('ocularDetalle').value || 'Sin observaciones adicionales.'}
+
+VEHÍCULOS PERITADOS (TOTAL: ${vehiculosList.length}):
+${bloquesVehiculos}
+
+NOTAS ADICIONALES / DICTADO EN CAMPO:
+${document.getElementById('notasExtra').value || 'Ninguna.'}
     `.trim();
 
+    const modelo = document.getElementById('modeloSelect').value;
     const btn = document.getElementById('btnGenerar');
     const output = document.getElementById('resultadoInforme');
     btn.disabled = true;
@@ -553,7 +787,7 @@ Relato técnico crudo: ${document.getElementById('datosCrudos').value}
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
           contents: [{ parts: [{ text: datosUsuario }] }],
-          generationConfig: { temperature: 0.0 }
+          generationConfig: { temperature: 0.1 }
         })
       });
 
@@ -581,10 +815,13 @@ Relato técnico crudo: ${document.getElementById('datosCrudos').value}
       output.textContent = `Error de conexión:\n${error.message}`;
     } finally {
       btn.disabled = false;
-      btn.textContent = '✨ Redactar Informe';
+      btn.textContent = '✨ Redactar Informe Completo';
     }
   }
 
+  // ==========================================
+  // CONTEO DE FOJAS ÚTILES (SOLO FRENTES, SIN NOTA DE ELEVACIÓN)
+  // ==========================================
   function calcularPaginacionFotos() {
     const modo = document.getElementById('fotosPorPagina').value;
     const cols = parseInt(document.getElementById('columnasFoto').value || '2', 10);
@@ -617,9 +854,8 @@ Relato técnico crudo: ${document.getElementById('datosCrudos').value}
     const lineasEstimadas = texto.split('\n').reduce((acc, l) => acc + Math.max(1, Math.ceil(l.length / 72)), 0);
     const fojasTexto = texto.startsWith('Completá los datos') ? 1 : Math.max(1, Math.ceil((lineasEstimadas + 8) / 25));
     const { totalPagsAnexo } = calcularPaginacionFotos();
-    const totalFojasFrente = fojasTexto + totalPagsAnexo; // Conteo estricto de frentes (fojas 1, 2, 3...)
-
-    document.getElementById('cantFojas').value = totalFojasFrente;
+    // Fojas útiles estrictas (fojas 1, 2, 3... frente de cada hoja). La Nota de Elevación NO se cuenta.
+    document.getElementById('cantFojas').value = fojasTexto + totalPagsAnexo;
     actualizarNotaElevacion();
   }
 
@@ -629,20 +865,22 @@ Relato técnico crudo: ${document.getElementById('datosCrudos').value}
   }
 
   function actualizarNotaElevacion() {
-    const hoy = new Date();
-    const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     const num = document.getElementById('numInforme').value || '[XXXX]';
     const sum = document.getElementById('sumario').value || '[XXXXXX]';
     const cv = document.getElementById('comisaria').value || '[XX]';
     const fisc = document.getElementById('fiscalia').value || 'OESTE';
-    const carat = document.getElementById('caratula').value || 'LESIONES ART. 94 del C.P.N.';
+    const carat = document.getElementById('caratula').value || 'LESIONES CULPOSAS';
     const fojas = parseInt(document.getElementById('cantFojas').value || '2', 10);
     const resumenLineas = (document.getElementById('elevacionResumenVehiculos').value || '').trim();
+
+    const dia = document.getElementById('elevDia').value.trim() || '____';
+    const mes = document.getElementById('elevMes').value.trim() || '____________';
+    const anio = document.getElementById('elevAnio').value.trim() || '2026';
 
     const nota = `Sección Investigación Científica Vial
 Informe Técnico Nº ${num}/2026
 
-Ciudad Autónoma de Buenos Aires, ${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()}.
+Ciudad Autónoma de Buenos Aires, ${dia} de ${mes} de ${anio}.
 
 A la Fiscalía Flagrancia ${fisc}
 S................/................D.
@@ -656,6 +894,9 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     document.getElementById('vistaNotaElevacion').innerText = nota;
   }
 
+  // ==========================================
+  // FOTOS ANEXO I
+  // ==========================================
   function cargarFotos(event) {
     const files = Array.from(event.target.files);
     files.forEach(file => {
@@ -712,6 +953,9 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     renderizarGaleria();
   }
 
+  // ==========================================
+  // EXPORTACIÓN WORD SEPARADA Y PDF CON MÁRGENES
+  // ==========================================
   function escapeHTML(str) {
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
@@ -740,6 +984,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
       const esLugarFecha = l.startsWith('Ciudad Autónoma de Buenos Aires,');
       const esDestinatario = l.startsWith('AL SEÑOR JEFE') || l.startsWith('S...');
       const esTitulo = l === 'OBJETOS DE LA INSPECCIÓN' || l === 'ELEMENTOS OFRECIDOS PARA ESTUDIO' || l === 'DILIGENCIAS PRACTICADAS' || l === 'CONCLUSIÓN';
+      const esSubtitulo = l.startsWith('Relevamiento del Escenario');
       const esItemVehiculo = l.startsWith('•') || l.startsWith('VEHÍCULO') || l.startsWith('LUGAR DEL RELEVAMIENTO');
 
       if (esNumInforme) {
@@ -750,6 +995,8 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
         html += `<p style="text-align:left; font-weight:bold; text-indent:0; margin-bottom:4pt;">${escapeHTML(l)}</p>`;
       } else if (esTitulo) {
         html += `<p style="text-align:left; font-weight:bold; text-indent:0; margin-top:12pt; margin-bottom:6pt; text-transform:uppercase;">${escapeHTML(l)}</p>`;
+      } else if (esSubtitulo) {
+        html += `<p style="text-align:left; font-weight:bold; text-decoration:underline; text-indent:0; margin-top:8pt; margin-bottom:4pt;">${escapeHTML(l)}</p>`;
       } else if (esItemVehiculo) {
         html += `<p style="text-align:justify; text-indent:0; margin-left:18pt; margin-bottom:6pt; line-height:1.5;">${escapeHTML(l)}</p>`;
       } else {
@@ -774,9 +1021,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
 
     let htmlAnexo = '';
     for (let p = 0; p < fotosAnexo.length; p += porPagina) {
-      if (p > 0) {
-        htmlAnexo += `<br clear="all" style="page-break-before:always">`;
-      }
+      if (p > 0) htmlAnexo += `<br clear="all" style="page-break-before:always">`;
       htmlAnexo += `<div class="pagina-anexo">`;
       htmlAnexo += `<div style="text-align:center; font-size:10pt; line-height:1.15; margin-bottom:6pt;">${headerHTML}</div>`;
       htmlAnexo += `<p style="text-align:center; font-weight:bold; text-decoration:underline; font-size:12pt; margin:0 0 2pt;">ANEXO I FOTOGRÁFICO</p>`;
@@ -814,23 +1059,13 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
 
   function envolverEnMHTML(htmlBody, imagenesArr) {
     const boundary = "----=_NextPart_Pericias_CABA_2026";
-    let mhtml = `MIME-Version: 1.0\r\n`;
-    mhtml += `Content-Type: multipart/related; boundary="${boundary}"\r\n\r\n`;
-    mhtml += `--${boundary}\r\n`;
-    mhtml += `Content-Type: text/html; charset="utf-8"\r\n`;
-    mhtml += `Content-Transfer-Encoding: 8bit\r\n\r\n`;
-    mhtml += htmlBody + `\r\n\r\n`;
-
+    let mhtml = `MIME-Version: 1.0\r\nContent-Type: multipart/related; boundary="${boundary}"\r\n\r\n`;
+    mhtml += `--${boundary}\r\nContent-Type: text/html; charset="utf-8"\r\nContent-Transfer-Encoding: 8bit\r\n\r\n${htmlBody}\r\n\r\n`;
     imagenesArr.forEach((imgObj, i) => {
       const base64Clean = imgObj.dataUrl.replace(/^data:image\/\w+;base64,/, '');
       const lineas76 = base64Clean.match(/.{1,76}/g).join('\r\n');
-      mhtml += `--${boundary}\r\n`;
-      mhtml += `Content-Location: file:///C:/pericia_img_${i + 1}.jpg\r\n`;
-      mhtml += `Content-Transfer-Encoding: base64\r\n`;
-      mhtml += `Content-Type: image/jpeg\r\n\r\n`;
-      mhtml += lineas76 + `\r\n\r\n`;
+      mhtml += `--${boundary}\r\nContent-Location: file:///C:/pericia_img_${i + 1}.jpg\r\nContent-Transfer-Encoding: base64\r\nContent-Type: image/jpeg\r\n\r\n${lineas76}\r\n\r\n`;
     });
-
     mhtml += `--${boundary}--`;
     return mhtml;
   }
@@ -838,20 +1073,8 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
   function descargarWordSoloInforme() {
     const texto = document.getElementById('resultadoInforme').innerText;
     if (!texto || texto.startsWith('Completá los datos')) return alert('Primero redactá el informe.');
-
     const htmlInforme = construirHTMLCuerpoInforme();
-    const docSource = `
-<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-<head><meta charset='utf-8'>
-<style>
-  @page SectionInforme { size: 21.0cm 29.7cm; margin: 4.0cm 1.0cm 2.0cm 3.0cm; }
-  div.SectionInforme { page: SectionInforme; }
-  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
-</style>
-</head>
-<body><div class="SectionInforme">${htmlInforme}</div></body>
-</html>`;
-
+    const docSource = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><style>@page SectionInforme { size: 21.0cm 29.7cm; margin: 4.0cm 1.0cm 2.0cm 3.0cm; } div.SectionInforme { page: SectionInforme; } body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }</style></head><body><div class="SectionInforme">${htmlInforme}</div></body></html>`;
     const numArchivo = (document.getElementById('numInforme').value || 'S-N').replace(/[^a-zA-Z0-9_-]/g, '-');
     const blob = new Blob(['\ufeff', docSource], { type: 'application/msword;charset=utf-8' });
     const link = document.createElement('a');
@@ -862,20 +1085,8 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
 
   function descargarWordSoloAnexo() {
     if (fotosAnexo.length === 0) return alert('Cargá al menos una fotografía.');
-
     const htmlAnexo = construirHTMLAnexoFotos(true);
-    const htmlCompleto = `
-<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-<head><meta charset='utf-8'>
-<style>
-  @page SectionAnexo { size: 21.0cm 29.7cm; margin: 1.5cm 1.5cm 1.5cm 1.5cm; }
-  div.SectionAnexo { page: SectionAnexo; }
-  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; color: #000; }
-</style>
-</head>
-<body><div class="SectionAnexo">${htmlAnexo}</div></body>
-</html>`;
-
+    const htmlCompleto = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><style>@page SectionAnexo { size: 21.0cm 29.7cm; margin: 1.5cm 1.5cm 1.5cm 1.5cm; } div.SectionAnexo { page: SectionAnexo; } body { font-family: "Times New Roman", Times, serif; font-size: 12pt; color: #000; }</style></head><body><div class="SectionAnexo">${htmlAnexo}</div></body></html>`;
     const mhtmlFinal = envolverEnMHTML(htmlCompleto, fotosAnexo);
     const numArchivo = (document.getElementById('numInforme').value || 'S-N').replace(/[^a-zA-Z0-9_-]/g, '-');
     const blob = new Blob([mhtmlFinal], { type: 'application/msword;charset=utf-8' });
@@ -885,12 +1096,10 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     link.click();
   }
 
+  // NOTA DE ELEVACIÓN SIN FIRMA DEL PERITO
   function descargarWordElevacion() {
     const texto = document.getElementById('vistaNotaElevacion').innerText;
-    const tpls = getTemplates();
     const headerHTML = generarHeaderHTML();
-    const firmaHTML = escapeHTML(tpls.firma).split('\n').map((l, i) => i === 0 ? `<b>${l}</b>` : l).join('<br>');
-
     let htmlNota = `<div style="text-align:center; font-size:10.5pt; line-height:1.15; margin-bottom:14pt;">${headerHTML}</div>`;
     texto.split('\n').forEach((linea, idx) => {
       const l = linea.trim();
@@ -908,20 +1117,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
       }
     });
 
-    htmlNota += `<div style="text-align:right; font-size:10pt; line-height:1.15; margin-top:22pt;">${firmaHTML}</div>`;
-
-    const docSource = `
-<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-<head><meta charset='utf-8'>
-<style>
-  @page SectionElevacion { size: 21.0cm 29.7cm; margin: 2.5cm 2.0cm 2.0cm 2.5cm; }
-  div.SectionElevacion { page: SectionElevacion; }
-  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
-</style>
-</head>
-<body><div class="SectionElevacion">${htmlNota}</div></body>
-</html>`;
-
+    const docSource = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><style>@page SectionElevacion { size: 21.0cm 29.7cm; margin: 2.5cm 2.0cm 2.0cm 2.5cm; } div.SectionElevacion { page: SectionElevacion; } body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }</style></head><body><div class="SectionElevacion">${htmlNota}</div></body></html>`;
     const numArchivo = (document.getElementById('numInforme').value || 'S-N').replace(/[^a-zA-Z0-9_-]/g, '-');
     const blob = new Blob(['\ufeff', docSource], { type: 'application/msword;charset=utf-8' });
     const link = document.createElement('a');
@@ -933,31 +1129,11 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
   function imprimirPDFCompleto() {
     const texto = document.getElementById('resultadoInforme').innerText;
     if (!texto || texto.startsWith('Completá los datos')) return alert('Primero redactá el informe.');
-
     const cuerpoHTML = construirHTMLCuerpoInforme();
     const anexoHTML = fotosAnexo.length > 0 ? construirHTMLAnexoFotos(false) : '';
 
     const win = window.open('', '_blank', 'width=900,height=1100');
-    win.document.write(`
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Informe Técnico N° ${document.getElementById('numInforme').value || ''}/2026</title>
-<style>
-  @page { size: A4 portrait; margin: 4.0cm 1.0cm 2.0cm 3.0cm; }
-  @page anexo { size: A4 portrait; margin: 1.5cm 1.5cm 1.5cm 1.5cm; }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
-  .bloque-informe { width: 100%; padding: 0 4pt; }
-  .pagina-anexo { page: anexo; page-break-before: always; break-before: page; width: 100%; }
-</style>
-</head>
-<body>
-  <div class="bloque-informe">${cuerpoHTML}</div>
-  ${anexoHTML}
-</body>
-</html>`);
+    win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Informe Técnico</title><style>@page { size: A4 portrait; margin: 4.0cm 1.0cm 2.0cm 3.0cm; } @page anexo { size: A4 portrait; margin: 1.5cm 1.5cm 1.5cm 1.5cm; } * { box-sizing: border-box; } html, body { margin: 0; padding: 0; font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; } .pagina-anexo { page: anexo; page-break-before: always; break-before: page; width: 100%; }</style></head><body>${cuerpoHTML}${anexoHTML}</body></html>`);
     win.document.close();
     win.focus();
     setTimeout(() => { win.print(); }, 450);
@@ -965,10 +1141,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
 
   function imprimirElevacion() {
     const texto = document.getElementById('vistaNotaElevacion').innerText;
-    const tpls = getTemplates();
     const headerHTML = generarHeaderHTML();
-    const firmaHTML = escapeHTML(tpls.firma).split('\n').map((l, i) => i === 0 ? `<strong>${l}</strong>` : l).join('<br>');
-
     let htmlNota = `<div style="text-align:center; font-size:10.5pt; line-height:1.15; margin-bottom:14pt;">${headerHTML}</div>`;
     texto.split('\n').forEach((linea, idx) => {
       const l = linea.trim();
@@ -985,22 +1158,9 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
         htmlNota += `<p style="text-align:justify; text-indent:1.25cm; margin:0 0 8pt; line-height:1.5;">${escapeHTML(l)}</p>`;
       }
     });
-    htmlNota += `<div style="text-align:right; font-size:10pt; line-height:1.15; margin-top:22pt;">${firmaHTML}</div>`;
 
     const win = window.open('', '_blank', 'width=850,height=1000');
-    win.document.write(`
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Nota de Elevación</title>
-<style>
-  @page { size: A4 portrait; margin: 2.5cm 2.0cm 2.0cm 2.5cm; }
-  body { margin: 0; font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
-</style>
-</head>
-<body>${htmlNota}</body>
-</html>`);
+    win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Nota de Elevación</title><style>@page { size: A4 portrait; margin: 2.5cm 2.0cm 2.0cm 2.5cm; } body { margin: 0; font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }</style></head><body>${htmlNota}</body></html>`);
     win.document.close();
     win.focus();
     setTimeout(() => { win.print(); }, 350);
@@ -1011,6 +1171,9 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     alert('Informe copiado al portapapeles.');
   }
 
+  // ==========================================
+  // BASE DE DATOS LOCAL Y SINCRONIZACIÓN MÓVIL <-> PC
+  // ==========================================
   function guardarEnBD(silencioso = false) {
     if (!db) return;
     const registro = {
@@ -1022,8 +1185,16 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
       fiscalia: document.getElementById('fiscalia').value,
       caratula: document.getElementById('caratula').value,
       horaArribo: document.getElementById('horaArribo').value,
-      lugarConsigna: document.getElementById('lugarConsigna').value,
-      datosCrudos: document.getElementById('datosCrudos').value,
+      fechaInformeInput: document.getElementById('fechaInformeInput').value,
+      usarFechaSistema: document.getElementById('usarFechaSistema').checked,
+      consigna: document.getElementById('consigna').value,
+      lugarHecho: document.getElementById('lugarHecho').value,
+      ocularCalzada: document.getElementById('ocularCalzada').value,
+      ocularLuz: document.getElementById('ocularLuz').value,
+      ocularEscena: document.getElementById('ocularEscena').value,
+      ocularDetalle: document.getElementById('ocularDetalle').value,
+      vehiculosList: vehiculosList,
+      notasExtra: document.getElementById('notasExtra').value,
       textoFinal: document.getElementById('resultadoInforme').innerText,
       fotos: fotosAnexo
     };
@@ -1042,7 +1213,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     const tx = db.transaction(["informes"], "readonly");
     const req = tx.objectStore("informes").count();
     req.onsuccess = () => {
-      document.getElementById('dbCounter').textContent = `Base Data Local: ${req.result} informes`;
+      document.getElementById('dbCounter').textContent = `Base Local: ${req.result} informes`;
     };
   }
 
@@ -1057,8 +1228,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
       const registros = req.result.reverse().filter(r =>
         (r.numInforme || '').toLowerCase().includes(filtro) ||
         (r.sumario || '').toLowerCase().includes(filtro) ||
-        (r.lugarConsigna || '').toLowerCase().includes(filtro) ||
-        (r.datosCrudos || '').toLowerCase().includes(filtro) ||
+        (r.lugarHecho || '').toLowerCase().includes(filtro) ||
         (r.textoFinal || '').toLowerCase().includes(filtro)
       );
 
@@ -1073,7 +1243,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
         div.innerHTML = `
           <div class="db-info">
             <strong>Informe N° ${r.numInforme || 'S/N'}/2026 • Sumario: ${r.sumario || 'N/A'}</strong>
-            <p>${r.fechaGuardado} | ${r.caratula} | ${r.lugarConsigna || 'Sin ubicación'} | 📷 ${r.fotos?.length || 0} fotos</p>
+            <p>${r.fechaGuardado} | ${r.caratula} | ${r.lugarHecho || 'Sin ubicación'} | 📷 ${r.fotos?.length || 0} fotos</p>
           </div>
           <div style="display:flex; gap:8px;">
             <button type="button" class="btn-primary" style="padding:6px 12px; font-size:0.82rem; min-width:auto;" onclick="cargarDesdeBD(${r.id})">Abrir</button>
@@ -1098,8 +1268,18 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
       document.getElementById('fiscalia').value = r.fiscalia || 'OESTE';
       document.getElementById('caratula').value = r.caratula || '';
       document.getElementById('horaArribo').value = r.horaArribo || '';
-      document.getElementById('lugarConsigna').value = r.lugarConsigna || '';
-      document.getElementById('datosCrudos').value = r.datosCrudos || '';
+      document.getElementById('usarFechaSistema').checked = r.usarFechaSistema !== false;
+      toggleFechaSistema();
+      if (r.fechaInformeInput) document.getElementById('fechaInformeInput').value = r.fechaInformeInput;
+      document.getElementById('consigna').value = r.consigna || '';
+      document.getElementById('lugarHecho').value = r.lugarHecho || '';
+      if (r.ocularCalzada) document.getElementById('ocularCalzada').value = r.ocularCalzada;
+      if (r.ocularLuz) document.getElementById('ocularLuz').value = r.ocularLuz;
+      if (r.ocularEscena) document.getElementById('ocularEscena').value = r.ocularEscena;
+      document.getElementById('ocularDetalle').value = r.ocularDetalle || '';
+      vehiculosList = r.vehiculosList && r.vehiculosList.length ? r.vehiculosList : [{ tipo: '', marcaModelo: '', dominio: '', posicionFinal: '', danos: '', sistemas: '' }];
+      renderizarVehiculos();
+      document.getElementById('notasExtra').value = r.notasExtra || '';
       document.getElementById('resultadoInforme').innerText = r.textoFinal || '';
       fotosAnexo = r.fotos || [];
       recalcularFojasTotales();
@@ -1118,10 +1298,13 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
 
   function nuevoInforme() {
     informeActualId = null;
-    ['numInforme', 'sumario', 'comisaria', 'horaArribo', 'lugarConsigna', 'datosCrudos'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('caratula').value = 'LESIONES ART. 94 del C.P.N.';
-    document.getElementById('elevacionResumenVehiculos').value = `VEHÍCULO 1: [Completar]\nLUGAR DEL RELEVAMIENTO: [Completar]`;
-    document.getElementById('resultadoInforme').innerText = 'Completá los datos a la izquierda y presioná "Redactar Informe"...';
+    ['numInforme', 'sumario', 'comisaria', 'horaArribo', 'consigna', 'lugarHecho', 'ocularDetalle', 'notasExtra'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('caratula').value = 'LESIONES CULPOSAS';
+    document.getElementById('usarFechaSistema').checked = true;
+    toggleFechaSistema();
+    vehiculosList = [{ tipo: '', marcaModelo: '', dominio: '', posicionFinal: '', danos: '', sistemas: 'Los sistemas de seguridad activa y pasiva evaluados estáticamente se hallaban en condiciones operativas.' }];
+    renderizarVehiculos();
+    document.getElementById('resultadoInforme').innerText = 'Completá los datos por solapas a la izquierda y presioná "Redactar Informe Completo"...';
     fotosAnexo = [];
     recalcularFojasTotales();
     renderizarGaleria();
@@ -1140,6 +1323,23 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     };
   }
 
+  async function compartirBackupMovil() {
+    const tx = db.transaction(["informes"], "readonly");
+    const req = tx.objectStore("informes").getAll();
+    req.onsuccess = async () => {
+      const jsonStr = JSON.stringify(req.result);
+      const fileName = `Backup_Pericias_CABA_${new Date().toISOString().slice(0,10)}.json`;
+      const file = new File([jsonStr], fileName, { type: "application/json" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: 'Backup Pericias CABA', text: 'Respaldo de informes periciales para importar en PC.' });
+        } catch (e) {}
+      } else {
+        exportarBackupJSON();
+      }
+    };
+  }
+
   function importarBackupJSON(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -1150,8 +1350,8 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
         const tx = db.transaction(["informes"], "readwrite");
         const store = tx.objectStore("informes");
         datos.forEach(item => store.put(item));
-        tx.oncomplete = () => { actualizarContadorBD(); renderizarBD(); alert(`Se importaron ${datos.length} informes.`); };
-      } catch (err) { alert('Archivo inválido.'); }
+        tx.oncomplete = () => { actualizarContadorBD(); renderizarBD(); alert(`Se sincronizaron ${datos.length} informes correctamente.`); };
+      } catch (err) { alert('Archivo de respaldo inválido.'); }
     };
     reader.readAsText(file);
   }
@@ -1159,3 +1359,8 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
 
 </body>
 </html>
+'''
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_code)
+print("Archivo index.html generado correctamente.")
