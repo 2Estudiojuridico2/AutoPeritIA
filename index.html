@@ -52,7 +52,7 @@
     .chip:hover { border-color: var(--accent); color: white; }
 
     .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
-    button { flex: 1; padding: 10px 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.88rem; transition: 0.2s; min-width: 115px; }
+    button { flex: 1; padding: 10px 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.86rem; transition: 0.2s; min-width: 110px; }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-primary { background: var(--accent); color: white; }
     .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
@@ -62,44 +62,28 @@
     .btn-warning { background: var(--warning); color: #451a03; }
     .btn-danger { background: var(--danger); color: white; flex: 0 0 auto; padding: 6px 10px; min-width: auto; font-size: 0.8rem; }
 
-    /* Vista Previa Hoja Oficial en Pantalla */
     .paper-sheet {
       background: #ffffff;
       color: #000000;
-      padding: 36px 18px 24px 48px;
+      padding: 36px 20px 24px 48px;
       border-radius: 6px;
       min-height: 540px;
       font-family: "Times New Roman", Times, serif;
       font-size: 12pt;
-      line-height: 1.4;
+      line-height: 1.5;
       text-align: justify;
       overflow-y: auto;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-    .paper-sheet.simetrica {
-      padding: 28px 28px;
-    }
-    .paper-sheet .first-page-banner {
-      text-align: center;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-      font-size: 10.5pt;
-      line-height: 1.2;
-      color: #000;
-    }
-    .paper-sheet .body-content {
-      white-space: pre-wrap;
-      font-family: "Times New Roman", Times, serif;
-      font-size: 12pt;
-    }
+    .paper-sheet.simetrica { padding: 28px 32px; }
+    .paper-sheet .first-page-banner { text-align: center; padding-bottom: 8px; margin-bottom: 12px; font-size: 10.5pt; line-height: 1.2; color: #000; }
+    .paper-sheet .body-content { white-space: pre-wrap; font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; }
 
-    /* Galería Anexo I */
     .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 8px; }
     .photo-item { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
     .photo-item img { width: 100%; height: 150px; object-fit: cover; border-radius: 4px; border: 1px solid #475569; }
     .photo-item input { font-size: 0.82rem; padding: 6px 8px; }
 
-    /* Base de datos */
     .db-list { display: flex; flex-direction: column; gap: 10px; }
     .db-item { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .db-info strong { color: var(--accent); font-size: 0.95rem; }
@@ -128,7 +112,6 @@
     <button class="tab-btn" onclick="cambiarTab('basedatos', this)">🗄️ 5. Base de Datos</button>
   </div>
 
-  <!-- BARRA CONFIGURACIÓN API -->
   <div class="api-bar">
     <input type="password" id="apiKeyInput" placeholder="Pegá aquí tu API Key de Google AI Studio (AIzaSy...)">
     <select id="modeloSelect">
@@ -140,7 +123,7 @@
     <span class="api-status" id="apiStatus"></span>
   </div>
 
-  <!-- PESTAÑA 1: EDITOR PRINCIPAL DEL INFORME -->
+  <!-- PESTAÑA 1: INFORME -->
   <div id="tab-editor" class="grid">
     <div class="card">
       <h2>
@@ -204,8 +187,8 @@
       </div>
 
       <div>
-        <label>Relato Crudo (Solo lo observado: vehículos, dominios, posición final y daños):</label>
-        <textarea id="datosCrudos" placeholder="Dictá o escribí únicamente los datos constatados..."></textarea>
+        <label>Relato Crudo (Solo los vehículos peritados y lo constatado):</label>
+        <textarea id="datosCrudos" placeholder="Dictá o escribí únicamente los datos constatados (1, 2, 3 o más vehículos)..."></textarea>
       </div>
 
       <div class="btn-group">
@@ -216,30 +199,34 @@
 
     <div class="card">
       <h2>
-        <span>Vista Previa (Cuerpo Asimétrico 3/1/4/2 cm • Anexo Simétrico)</span>
+        <span>Vista Previa (Interlineado 1.5 • Sangría 1ª Línea • Márgenes 3/1/4/2 cm)</span>
       </h2>
       <div class="paper-sheet" id="hojaOficial">
         <div class="first-page-banner" id="bannerPrimeraPagina"></div>
-        <div class="body-content" id="resultadoInforme" contenteditable="true">Completá los datos a la izquierda y presioná "Redactar Informe"...</div>
+        <div class="body-content" id="resultadoInforme" contenteditable="true" oninput="recalcularFojasTotales()">Completá los datos a la izquierda y presioná "Redactar Informe"...</div>
       </div>
 
       <div class="btn-group">
-        <button type="button" class="btn-success" onclick="guardarEnBD()">💾 Guardar en Base</button>
-        <button type="button" class="btn-primary" onclick="descargarWordInforme()">📄 Descargar Word (.doc)</button>
-        <button type="button" class="btn-warning" onclick="imprimirPDFInforme()">🖨️ Imprimir / PDF</button>
+        <button type="button" class="btn-success" onclick="guardarEnBD()">💾 Guardar</button>
+        <button type="button" class="btn-primary" onclick="descargarWordSoloInforme()">📄 Informe (.doc)</button>
+        <button type="button" class="btn-primary" onclick="descargarWordSoloAnexo()">📷 Anexo Fotos (.doc)</button>
+        <button type="button" class="btn-warning" onclick="imprimirPDFCompleto()">🖨️ Imprimir / PDF</button>
         <button type="button" style="background:#334155; color:white;" onclick="copiarInforme()">📋 Copiar</button>
       </div>
     </div>
   </div>
 
-  <!-- PESTAÑA 2: ANEXO I FOTOGRÁFICO DINÁMICO -->
+  <!-- PESTAÑA 2: ANEXO FOTOGRÁFICO -->
   <div id="tab-anexo" class="card hidden">
     <h2>
-      <span>Anexo I - Plantilla Fotográfica Ilustrativa (Márgenes Simétricos)</span>
-      <label style="background:var(--accent); color:white; padding:8px 14px; border-radius:6px; cursor:pointer; margin:0;">
-        ➕ Cargar Fotos
-        <input type="file" id="inputFotos" accept="image/*" multiple style="display:none;" onchange="cargarFotos(event)">
-      </label>
+      <span>Anexo I - Plantilla Fotográfica Ilustrativa</span>
+      <div style="display:flex; gap:8px;">
+        <label style="background:var(--accent); color:white; padding:8px 14px; border-radius:6px; cursor:pointer; margin:0; font-size:0.86rem;">
+          ➕ Cargar Fotos
+          <input type="file" id="inputFotos" accept="image/*" multiple style="display:none;" onchange="cargarFotos(event)">
+        </label>
+        <button type="button" class="btn-primary" style="padding:8px 14px; min-width:auto;" onclick="descargarWordSoloAnexo()">📷 Descargar Anexo (.doc)</button>
+      </div>
     </h2>
 
     <div class="row-4" style="background:#172033; padding:12px; border-radius:8px; border:1px solid var(--border);">
@@ -254,18 +241,18 @@
       </div>
       <div>
         <label>Alto de cada Foto (mm):</label>
-        <input type="number" id="altoFotoMM" value="78" min="45" max="115" onchange="recalcularFojas()">
+        <input type="number" id="altoFotoMM" value="78" min="45" max="115" onchange="recalcularFojasTotales()">
       </div>
       <div>
         <label>Columnas por Fila:</label>
-        <select id="columnasFoto" onchange="recalcularFojas()">
+        <select id="columnasFoto" onchange="recalcularFojasTotales()">
           <option value="2" selected>2 Columnas (Simétrico)</option>
           <option value="3">3 Columnas (Compacto)</option>
         </select>
       </div>
       <div>
-        <label>Páginas estimadas del Anexo:</label>
-        <input type="text" id="paginasAnexoInfo" value="0 páginas" readonly style="color:var(--accent); font-weight:bold;">
+        <label>Hojas estimadas del Anexo:</label>
+        <input type="text" id="paginasAnexoInfo" value="0 hojas" readonly style="color:var(--accent); font-weight:bold;">
       </div>
     </div>
 
@@ -275,36 +262,39 @@
   <!-- PESTAÑA 3: NOTA DE ELEVACIÓN -->
   <div id="tab-elevacion" class="card hidden">
     <h2>
-      <span>Nota de Elevación a Fiscalía (Modelo Oficial • Márgenes Simétricos)</span>
+      <span>Nota de Elevación a Fiscalía (Frente a frente • No cuenta como foja útil del informe)</span>
       <div style="display:flex; gap:8px;">
-        <button type="button" class="btn-primary" style="padding:7px 12px; font-size:0.85rem;" onclick="descargarWordElevacion()">📄 Descargar Nota Word</button>
+        <button type="button" class="btn-primary" style="padding:7px 12px; font-size:0.85rem;" onclick="descargarWordElevacion()">📨 Descargar Nota (.doc)</button>
         <button type="button" class="btn-warning" style="padding:7px 12px; font-size:0.85rem;" onclick="imprimirElevacion()">🖨️ Imprimir Nota</button>
       </div>
     </h2>
     <div class="row-2">
       <div>
-        <label>Cantidad de Fojas Útiles del Informe (cuerpo + anexo):</label>
-        <input type="number" id="cantFojas" value="3" min="1" max="50" oninput="actualizarNotaElevacion()">
+        <label>Fojas Útiles Totales Detectadas (Solo frentes: Cuerpo + Anexo):</label>
+        <input type="number" id="cantFojas" value="2" min="1" max="50" oninput="actualizarNotaElevacion()">
       </div>
       <div>
-        <label>Detalle por renglón (Vehículos y Lugar de Relevamiento):</label>
+        <label>Detalle por renglón (Vehículos peritados y Lugar de Relevamiento):</label>
         <textarea id="elevacionResumenVehiculos" style="min-height:85px;" oninput="actualizarNotaElevacion()"></textarea>
       </div>
     </div>
-    <div class="paper-sheet simetrica" id="vistaNotaElevacion" contenteditable="true" style="min-height:440px;"></div>
+    <div class="paper-sheet simetrica" id="hojaElevacion">
+      <div class="first-page-banner" id="bannerElevacion"></div>
+      <div class="body-content" id="vistaNotaElevacion" contenteditable="true"></div>
+    </div>
   </div>
 
-  <!-- PESTAÑA 4: EDICIÓN DE PARTES GENÉRICAS -->
+  <!-- PESTAÑA 4: PLANTILLAS -->
   <div id="tab-plantillas" class="card hidden">
     <h2>
       <span>Configuración de Textos Genéricos</span>
       <button type="button" class="btn-success" style="flex:0 0 auto;" onclick="guardarPlantillasGenericas()">💾 Guardar Configuración</button>
     </h2>
     <p style="font-size:0.85rem; color:var(--muted); margin:0;">
-      <strong>Esquema de márgenes activo:</strong> Informe Técnico con márgenes asimétricos (<strong>Izq 3 cm / Der 1 cm / Sup 4 cm / Inf 2 cm</strong> y encabezado solo en 1ª hoja) | Anexo I y Nota de Elevación con <strong>márgenes simétricos</strong>.
+      <strong>Formato oficial activo:</strong> Informe Técnico con márgenes asimétricos (<strong>Izq 3 cm / Der 1 cm / Sup 4 cm / Inf 2 cm</strong>), interlineado <strong>1.5</strong>, sangría de primera línea <strong>1.25 cm</strong> y encabezado solo en primera hoja.
     </p>
     <div>
-      <label>Encabezado Institucional (1ª Página del Informe Técnico y encabezado de Anexo I):</label>
+      <label>Encabezado Institucional (1ª Página del Informe, Nota de Elevación y Anexo I):</label>
       <textarea id="tplEncabezado" style="min-height:85px;"></textarea>
     </div>
     <div>
@@ -321,10 +311,10 @@
     </div>
   </div>
 
-  <!-- PESTAÑA 5: BASE DE DATOS LOCAL -->
+  <!-- PESTAÑA 5: BASE DE DATOS -->
   <div id="tab-basedatos" class="card hidden">
     <h2>
-      <span>Base de Datos Local de Pericias</span>
+      <span>Base Data Local de Pericias</span>
       <div style="display:flex; gap:8px;">
         <button type="button" style="padding:6px 12px; font-size:0.8rem; background:#334155; color:white;" onclick="exportarBackupJSON()">⬇️ Backup</button>
         <label style="padding:6px 12px; font-size:0.8rem; background:#334155; color:white; border-radius:6px; cursor:pointer; margin:0;">
@@ -339,9 +329,6 @@
 </div>
 
 <script>
-  // ==========================================
-  // 1. PLANTILLAS GENÉRICAS EDITABLES
-  // ==========================================
   const DEFAULT_TEMPLATES = {
     encabezado: `POLICÍA DE LA CIUDAD\nGOBIERNO DE LA CIUDAD AUTÓNOMA DE BUENOS AIRES\nMINISTERIO DE SEGURIDAD\n"2026 - Año del 30º Aniversario de la sanción de la Constitución de la Ciudad Autónoma de Buenos Aires."`,
     objetos: `Efectuar la inspección técnica detallada de los vehículos precedentemente identificados, consignando la descripción de daños estructurales, el relevamiento de vestigios accidentológicos y la inspección ocular del escenario del hecho, complementado con la correspondiente fijación fotográfica.\nSe hace constar que la ubicación analítica de los daños se consigna desde la posición del conductor (de atrás hacia adelante y de izquierda a derecha).-`,
@@ -350,7 +337,7 @@
   };
 
   function getTemplates() {
-    return JSON.parse(localStorage.getItem('pericias_caba_templates_v3') || 'null') || DEFAULT_TEMPLATES;
+    return JSON.parse(localStorage.getItem('pericias_caba_templates_v4') || 'null') || DEFAULT_TEMPLATES;
   }
 
   function cargarPlantillasGenericas() {
@@ -359,7 +346,7 @@
     document.getElementById('tplObjetos').value = saved.objetos;
     document.getElementById('tplRemision').value = saved.remision;
     document.getElementById('tplFirma').value = saved.firma;
-    actualizarBannerPrimeraPagina();
+    actualizarBanners();
   }
 
   function guardarPlantillasGenericas() {
@@ -369,22 +356,20 @@
       remision: document.getElementById('tplRemision').value.trim(),
       firma: document.getElementById('tplFirma').value.trim()
     };
-    localStorage.setItem('pericias_caba_templates_v3', JSON.stringify(data));
-    actualizarBannerPrimeraPagina();
+    localStorage.setItem('pericias_caba_templates_v4', JSON.stringify(data));
+    actualizarBanners();
     alert('Configuración de textos genéricos guardada.');
   }
 
-  function actualizarBannerPrimeraPagina() {
+  function actualizarBanners() {
     const tpls = getTemplates();
-    const lineas = tpls.encabezado.split('\n');
-    document.getElementById('bannerPrimeraPagina').innerHTML = lineas.map((l, i) =>
-      i === lineas.length - 1 ? `<em>${l}</em>` : `<strong>${l}</strong>`
+    const htmlBanner = tpls.encabezado.split('\n').map((l, i, arr) =>
+      i === arr.length - 1 ? `<em>${l}</em>` : `<strong>${l}</strong>`
     ).join('<br>');
+    document.getElementById('bannerPrimeraPagina').innerHTML = htmlBanner;
+    document.getElementById('bannerElevacion').innerHTML = htmlBanner;
   }
 
-  // ==========================================
-  // 2. BASE DE DATOS INDEXEDDB Y NAVEGACIÓN
-  // ==========================================
   let db;
   let fotosAnexo = [];
   let informeActualId = null;
@@ -408,7 +393,7 @@
       document.getElementById('apiStatus').textContent = '✓ Clave lista';
     }
     cargarPlantillasGenericas();
-    document.getElementById('elevacionResumenVehiculos').value = `VEHÍCULO 1: [Completar]\nVEHÍCULO 2: [Completar]\nLUGAR DEL RELEVAMIENTO: [Completar]`;
+    document.getElementById('elevacionResumenVehiculos').value = `VEHÍCULO 1: [Completar]\nLUGAR DEL RELEVAMIENTO: [Completar]`;
     actualizarNotaElevacion();
   };
 
@@ -430,9 +415,6 @@
     if (tab === 'elevacion') actualizarNotaElevacion();
   }
 
-  // ==========================================
-  // 3. HERRAMIENTAS DE CAMPO (VOZ, GPS, CHIPS)
-  // ==========================================
   function insertarChip(texto) {
     const area = document.getElementById('datosCrudos');
     area.value += (area.value && !area.value.endsWith(' ') ? ' ' : '') + texto;
@@ -475,7 +457,7 @@
   }
 
   function toggleDictado() {
-    if (!recognition) return alert('Dictado por voz no soportado en este navegador.');
+    if (!recognition) return alert('Dictado por voz no soportado.');
     const btn = document.getElementById('btnVoz');
     if (!grabando) {
       recognition.start();
@@ -487,9 +469,6 @@
     }
   }
 
-  // ==========================================
-  // 4. GENERACIÓN CON GEMINI (ESTRICTA + TEXTOS GENÉRICOS)
-  // ==========================================
   async function generarInforme() {
     const apiKey = document.getElementById('apiKeyInput').value.trim() || localStorage.getItem('gemini_api_key_caba');
     if (!apiKey) return alert('Pegá tu API Key de Google AI Studio arriba.');
@@ -498,50 +477,47 @@
     const tpls = getTemplates();
     const SYSTEM_PROMPT = `Actúa como un Perito Oficial en Accidentología Vial de la Policía de la Ciudad Autónoma de Buenos Aires (CABA). Transforma los datos crudos relevados en un Informe Técnico Pericial formal.
 
-REGLA SUPREMA DE FIDELIDAD FÁCTICA (PROHIBIDO INVENTAR):
+REGLA SUPREMA DE FIDELIDAD FÁCTICA Y CANTIDAD DE VEHÍCULOS (PROHIBIDO INVENTAR O DEDUCIR):
 - Redacta ÚNICAMENTE con los datos explícitos proporcionados por el usuario.
-- ESTÁ TERMINANTEMENTE PROHIBIDO inferir, suponer, deducir o agregar información que no esté escrita (NO inventes estado de frenos, neumáticos, luces, clima, iluminación ni daños no mencionados).
+- Si el relato menciona UN (1) solo vehículo, lista ÚNICAMENTE "VEHÍCULO 1" y NUNCA agregues "VEHÍCULO 2". Si menciona TRES (3) o más vehículos, numéralos correlativamente: "VEHÍCULO 1", "VEHÍCULO 2", "VEHÍCULO 3", etc.
+- NO infieras ni supongas estado de frenos, luces, neumáticos, clima ni daños no escritos.
 - Si falta un dato administrativo obligatorio, escribe exactamente "[Completar]".
 
-TEXTOS GENÉRICOS OBLIGATORIOS A UTILIZAR LITERALMENTE:
-- En la sección OBJETOS DE LA INSPECCIÓN escribe literalmente:
+TEXTOS GENÉRICOS OBLIGATORIOS:
+- En OBJETOS DE LA INSPECCIÓN escribe literalmente:
 ${tpls.objetos}
 
 - En el párrafo de remisión dentro de CONCLUSIÓN escribe literalmente:
 ${tpls.remision}
 
-- Al final del informe NO incluyas firma grande ni repetida; termina exactamente con la frase:
+- Al final del informe NO incluyas firma; termina exactamente con:
 Es todo cuanto tengo para informar.-
 
-DATOS FIJOS DEL PERITO PARA EL PÁRRAFO INTRODUCTORIO:
-- Destinatario:
-AL SEÑOR JEFE DE SECCIÓN INVESTIGACIÓN CIENTÍFICA VIAL.
-S......................./.......................D.
-- Perito Actuante: Oficial Mayor, Legajo N° 11500, Lionel Nicolás ZURITA, Técnico Superior en Criminalística con especialización en Accidentología Vial, numerario de la Sección Investigación Científica Vial, dependiente de la División Ingeniería Vial, Superintendencia de Policía Científica POLICÍA DE LA CIUDAD DE BUENOS AIRES.
+DATOS FIJOS DEL PERITO:
+Oficial Mayor, Legajo N° 11500, Lionel Nicolás ZURITA, Técnico Superior en Criminalística con especialización en Accidentología Vial, numerario de la Sección Investigación Científica Vial, dependiente de la División Ingeniería Vial, Superintendencia de Policía Científica POLICÍA DE LA CIUDAD DE BUENOS AIRES.
 
-ESTRUCTURA OBLIGATORIA DEL INFORME (en texto plano limpio, SIN el membrete institucional superior porque ya va en el encabezado de la primera hoja, y SIN símbolos Markdown como asteriscos o numerales):
+ORDEN EXACTO DE ENCABEZADO DEL INFORME (SIN membrete superior y SIN asteriscos ni numerales Markdown):
+INFORME TÉCNICO N° [XXXX]/2026.
 Ciudad Autónoma de Buenos Aires, [Fecha].
 
-INFORME TÉCNICO N° [XXXX]/2026.
-
 AL SEÑOR JEFE DE SECCIÓN INVESTIGACIÓN CIENTÍFICA VIAL.
 S......................./.......................D.
 
-[Párrafo introductorio completo con sumario, comisaría, carátula, fiscalía y enumeración de rodados]
+[Párrafo introductorio completo con sumario, comisaría, carátula, fiscalía y enumeración exacta de los rodados peritados]
 
 OBJETOS DE LA INSPECCIÓN
 [Texto genérico]
 
 ELEMENTOS OFRECIDOS PARA ESTUDIO
 • VEHÍCULO 1: ...
-• VEHÍCULO 2: ...
+(y solo si existen más vehículos en el relato: • VEHÍCULO 2: ..., etc.)
 • LUGAR DEL RELEVAMIENTO: ...
 
 DILIGENCIAS PRACTICADAS
-[Relato de comisión, arribo, consigna, escenario y examen técnico analítico de cada unidad]
+[Relato de comisión, arribo, consigna, escenario y examen técnico analítico]
 
 CONCLUSIÓN
-[Compatibilidad física estricta de los daños constatados]
+[Análisis técnico estricto]
 Las descripciones vertidas en el presente cuerpo del informe recogen la totalidad de los daños y vestigios constatados en el lugar. Se adjunta el correspondiente Anexo I (Plantilla Fotográfica Ilustrativa) en foja aparte.-
 [Texto genérico de remisión]
 Es todo cuanto tengo para informar.-`;
@@ -560,7 +536,7 @@ Fiscalía: UFLA ${document.getElementById('fiscalia').value}
 Carátula: ${document.getElementById('caratula').value || 'LESIONES ART. 94 del C.P.N.'}
 Hora de arribo: ${document.getElementById('horaArribo').value || '[Completar]'}
 Lugar del hecho y Efectivo de consigna: ${document.getElementById('lugarConsigna').value || '[Completar]'}
-Relato técnico crudo (ESTRICTAMENTE NO INVENTAR NADA FUERA DE ESTO): ${document.getElementById('datosCrudos').value}
+Relato técnico crudo: ${document.getElementById('datosCrudos').value}
     `.trim();
 
     const btn = document.getElementById('btnGenerar');
@@ -598,7 +574,7 @@ Relato técnico crudo (ESTRICTAMENTE NO INVENTAR NADA FUERA DE ESTO): ${document
           .join('\n');
         document.getElementById('elevacionResumenVehiculos').value = lineasElem;
       }
-      actualizarNotaElevacion();
+      recalcularFojasTotales();
       guardarEnBD(true);
 
     } catch (error) {
@@ -609,45 +585,6 @@ Relato técnico crudo (ESTRICTAMENTE NO INVENTAR NADA FUERA DE ESTO): ${document
     }
   }
 
-  // ==========================================
-  // 5. NOTA DE ELEVACIÓN SEGÚN MODELO OFICIAL
-  // ==========================================
-  function numeroALetrasFojas(n) {
-    const map = {1:"UNA (01)", 2:"DOS (02)", 3:"TRES (03)", 4:"CUATRO (04)", 5:"CINCO (05)", 6:"SEIS (06)", 7:"SIETE (07)", 8:"OCHO (08)", 9:"NUEVE (09)", 10:"DIEZ (10)", 11:"ONCE (11)", 12:"DOCE (12)"};
-    return map[n] || `${n} (${n < 10 ? '0'+n : n})`;
-  }
-
-  function actualizarNotaElevacion() {
-    const hoy = new Date();
-    const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-    const num = document.getElementById('numInforme').value || '[XXXX]';
-    const sum = document.getElementById('sumario').value || '[XXXXXX]';
-    const cv = document.getElementById('comisaria').value || '[XX]';
-    const fisc = document.getElementById('fiscalia').value || 'OESTE';
-    const carat = document.getElementById('caratula').value || 'LESIONES ART. 94 del C.P.N.';
-    const fojas = parseInt(document.getElementById('cantFojas').value || '3', 10);
-    const resumenLineas = (document.getElementById('elevacionResumenVehiculos').value || '').trim();
-
-    const nota = `Sección Investigación Científica Vial
-Informe Técnico Nº ${num}/2026
-
-Ciudad Autónoma de Buenos Aires, ${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()}.
-
-A la Fiscalía Flagrancia ${fisc}
-S................/................D.
-
-Tengo el agrado de dirigirme a Ud., en relación al Sumario N° ${sum}/2026, instruidas por la CV ${cv}, caratulado ${carat}, con el fin de remitir el trabajo realizado por el Oficial Mayor, Legajo Nº 11500, Lionel Nicolás ZURITA, numerario de esta Sección Investigación Científica Vial,
-
-${resumenLineas}
-
-En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetrasFojas(fojas)} fojas útiles. Sin otro particular, saludo a Ud. muy atte.-`;
-
-    document.getElementById('vistaNotaElevacion').innerText = nota;
-  }
-
-  // ==========================================
-  // 6. ANEXO I FOTOGRÁFICO DINÁMICO Y AUTO-AJUSTABLE
-  // ==========================================
   function calcularPaginacionFotos() {
     const modo = document.getElementById('fotosPorPagina').value;
     const cols = parseInt(document.getElementById('columnasFoto').value || '2', 10);
@@ -665,20 +602,58 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
       document.getElementById('altoFotoMM').value = altoMM;
     }
 
-    const totalPags = fotosAnexo.length > 0 ? Math.ceil(fotosAnexo.length / porPagina) : 0;
-    document.getElementById('paginasAnexoInfo').value = `${totalPags} página(s) (${porPagina} fotos/pág)`;
-    return { porPagina, cols, altoMM, totalPags };
+    const totalPagsAnexo = fotosAnexo.length > 0 ? Math.ceil(fotosAnexo.length / porPagina) : 0;
+    document.getElementById('paginasAnexoInfo').value = `${totalPagsAnexo} hoja(s) (${porPagina} fotos/hoja)`;
+    return { porPagina, cols, altoMM, totalPagsAnexo };
   }
 
   function recalcularLayoutFotos() {
     calcularPaginacionFotos();
-    recalcularFojas();
+    recalcularFojasTotales();
   }
 
-  function recalcularFojas() {
-    const { totalPags } = calcularPaginacionFotos();
-    document.getElementById('cantFojas').value = 2 + totalPags;
+  function recalcularFojasTotales() {
+    const texto = document.getElementById('resultadoInforme').innerText || '';
+    const lineasEstimadas = texto.split('\n').reduce((acc, l) => acc + Math.max(1, Math.ceil(l.length / 72)), 0);
+    const fojasTexto = texto.startsWith('Completá los datos') ? 1 : Math.max(1, Math.ceil((lineasEstimadas + 8) / 25));
+    const { totalPagsAnexo } = calcularPaginacionFotos();
+    const totalFojasFrente = fojasTexto + totalPagsAnexo; // Conteo estricto de frentes (fojas 1, 2, 3...)
+
+    document.getElementById('cantFojas').value = totalFojasFrente;
     actualizarNotaElevacion();
+  }
+
+  function numeroALetrasFojas(n) {
+    const map = {1:"UNA (01)", 2:"DOS (02)", 3:"TRES (03)", 4:"CUATRO (04)", 5:"CINCO (05)", 6:"SEIS (06)", 7:"SIETE (07)", 8:"OCHO (08)", 9:"NUEVE (09)", 10:"DIEZ (10)", 11:"ONCE (11)", 12:"DOCE (12)"};
+    return map[n] || `${n} (${n < 10 ? '0'+n : n})`;
+  }
+
+  function actualizarNotaElevacion() {
+    const hoy = new Date();
+    const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    const num = document.getElementById('numInforme').value || '[XXXX]';
+    const sum = document.getElementById('sumario').value || '[XXXXXX]';
+    const cv = document.getElementById('comisaria').value || '[XX]';
+    const fisc = document.getElementById('fiscalia').value || 'OESTE';
+    const carat = document.getElementById('caratula').value || 'LESIONES ART. 94 del C.P.N.';
+    const fojas = parseInt(document.getElementById('cantFojas').value || '2', 10);
+    const resumenLineas = (document.getElementById('elevacionResumenVehiculos').value || '').trim();
+
+    const nota = `Sección Investigación Científica Vial
+Informe Técnico Nº ${num}/2026
+
+Ciudad Autónoma de Buenos Aires, ${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()}.
+
+A la Fiscalía Flagrancia ${fisc}
+S................/................D.
+
+Tengo el agrado de dirigirme a Ud., en relación al Sumario N° ${sum}/2026, instruidas por la CV ${cv}, caratulado ${carat}, con el fin de remitir el trabajo realizado por el Oficial Mayor, Legajo Nº 11500, Lionel Nicolás ZURITA, numerario de esta Sección Investigación Científica Vial,
+
+${resumenLineas}
+
+En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetrasFojas(fojas)} fojas útiles. Sin otro particular, saludo a Ud. muy atte.-`;
+
+    document.getElementById('vistaNotaElevacion').innerText = nota;
   }
 
   function cargarFotos(event) {
@@ -702,7 +677,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
             dataUrl: compressedUrl,
             epigrafe: `Vista ilustrativa del relevamiento pericial.`
           });
-          recalcularFojas();
+          recalcularFojasTotales();
           renderizarGaleria();
         };
         img.src = e.target.result;
@@ -733,13 +708,10 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
   function actualizarEpigrafe(idx, val) { fotosAnexo[idx].epigrafe = val; }
   function eliminarFoto(idx) {
     fotosAnexo.splice(idx, 1);
-    recalcularFojas();
+    recalcularFojasTotales();
     renderizarGaleria();
   }
 
-  // ==========================================
-  // 7. EXPORTACIÓN WORD MHTML (CON IMÁGENES INCRUSTADAS REALES)
-  // ==========================================
   function escapeHTML(str) {
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
@@ -751,18 +723,104 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     ).join('<br>');
   }
 
+  function construirHTMLCuerpoInforme() {
+    const texto = document.getElementById('resultadoInforme').innerText;
+    const tpls = getTemplates();
+    const headerHTML = generarHeaderHTML();
+    const firmaHTML = escapeHTML(tpls.firma).split('\n').map((l, i) => i === 0 ? `<b>${l}</b>` : l).join('<br>');
+
+    let html = `<div style="text-align:center; font-size:10.5pt; line-height:1.15; margin-bottom:14pt;">${headerHTML}</div>`;
+
+    const lineas = texto.split('\n');
+    lineas.forEach(linea => {
+      const l = linea.trim();
+      if (!l) return;
+
+      const esNumInforme = l.startsWith('INFORME TÉCNICO');
+      const esLugarFecha = l.startsWith('Ciudad Autónoma de Buenos Aires,');
+      const esDestinatario = l.startsWith('AL SEÑOR JEFE') || l.startsWith('S...');
+      const esTitulo = l === 'OBJETOS DE LA INSPECCIÓN' || l === 'ELEMENTOS OFRECIDOS PARA ESTUDIO' || l === 'DILIGENCIAS PRACTICADAS' || l === 'CONCLUSIÓN';
+      const esItemVehiculo = l.startsWith('•') || l.startsWith('VEHÍCULO') || l.startsWith('LUGAR DEL RELEVAMIENTO');
+
+      if (esNumInforme) {
+        html += `<p style="text-align:right; font-weight:bold; text-indent:0; margin-bottom:2pt;">${escapeHTML(l)}</p>`;
+      } else if (esLugarFecha) {
+        html += `<p style="text-align:right; text-indent:0; margin-bottom:16pt;">${escapeHTML(l)}</p>`;
+      } else if (esDestinatario) {
+        html += `<p style="text-align:left; font-weight:bold; text-indent:0; margin-bottom:4pt;">${escapeHTML(l)}</p>`;
+      } else if (esTitulo) {
+        html += `<p style="text-align:left; font-weight:bold; text-indent:0; margin-top:12pt; margin-bottom:6pt; text-transform:uppercase;">${escapeHTML(l)}</p>`;
+      } else if (esItemVehiculo) {
+        html += `<p style="text-align:justify; text-indent:0; margin-left:18pt; margin-bottom:6pt; line-height:1.5;">${escapeHTML(l)}</p>`;
+      } else {
+        html += `<p style="text-align:justify; text-indent:1.25cm; margin-bottom:8pt; line-height:1.5;">${escapeHTML(l)}</p>`;
+      }
+    });
+
+    html += `<div style="text-align:right; font-size:10pt; line-height:1.15; margin-top:20pt;">${firmaHTML}</div>`;
+    return html;
+  }
+
+  function construirHTMLAnexoFotos(usarRutasMHTML) {
+    const tpls = getTemplates();
+    const headerHTML = generarHeaderHTML();
+    const firmaHTML = escapeHTML(tpls.firma).split('\n').map((l, i) => i === 0 ? `<b>${l}</b>` : l).join('<br>');
+    const { porPagina, cols, altoMM } = calcularPaginacionFotos();
+    const anchoPct = Math.floor(100 / cols);
+    const anchoImgPx = Math.floor(((180 / cols) - 8) * 3.78);
+    const altoImgPx = Math.floor(altoMM * 3.78);
+    const numInf = document.getElementById('numInforme').value || '[XXXX]';
+    const sumInf = document.getElementById('sumario').value || 'N/A';
+
+    let htmlAnexo = '';
+    for (let p = 0; p < fotosAnexo.length; p += porPagina) {
+      if (p > 0) {
+        htmlAnexo += `<br clear="all" style="page-break-before:always">`;
+      }
+      htmlAnexo += `<div class="pagina-anexo">`;
+      htmlAnexo += `<div style="text-align:center; font-size:10pt; line-height:1.15; margin-bottom:6pt;">${headerHTML}</div>`;
+      htmlAnexo += `<p style="text-align:center; font-weight:bold; text-decoration:underline; font-size:12pt; margin:0 0 2pt;">ANEXO I FOTOGRÁFICO</p>`;
+      htmlAnexo += `<p style="text-align:center; font-style:italic; font-size:10pt; margin:0 0 8pt;">Informe Técnico N° ${escapeHTML(numInf)}/2026 - Sumario N° ${escapeHTML(sumInf)}/2026</p>`;
+      htmlAnexo += `<table style="width:100%; border-collapse:collapse;">`;
+
+      const grupo = fotosAnexo.slice(p, p + porPagina);
+      for (let r = 0; r < grupo.length; r += cols) {
+        htmlAnexo += `<tr>`;
+        for (let c = 0; c < cols; c++) {
+          const idxGlobal = p + r + c;
+          const foto = grupo[r + c];
+          if (foto) {
+            const srcImg = usarRutasMHTML ? `file:///C:/pericia_img_${idxGlobal + 1}.jpg` : foto.dataUrl;
+            const styleImg = usarRutasMHTML
+              ? `width:${anchoImgPx}px; height:${altoImgPx}px; border:1px solid #333;`
+              : `width:100%; height:${altoMM}mm; object-fit:cover; border:0.5pt solid #444;`;
+            htmlAnexo += `
+              <td style="width:${anchoPct}%; border:1pt solid #000; padding:4pt; text-align:center; vertical-align:top;">
+                <img src="${srcImg}" ${usarRutasMHTML ? `width="${anchoImgPx}" height="${altoImgPx}"` : ''} style="${styleImg}">
+                <p style="font-family:'Times New Roman', serif; font-size:9.5pt; margin:3pt 0 0; text-align:center;"><b>PLACA N° ${idxGlobal + 1}:</b> ${escapeHTML(foto.epigrafe)}</p>
+              </td>`;
+          } else {
+            htmlAnexo += `<td style="width:${anchoPct}%; border:none;"></td>`;
+          }
+        }
+        htmlAnexo += `</tr>`;
+      }
+      htmlAnexo += `</table>`;
+      htmlAnexo += `<div style="text-align:right; font-size:10pt; line-height:1.15; margin-top:10pt;">${firmaHTML}</div>`;
+      htmlAnexo += `</div>`;
+    }
+    return htmlAnexo;
+  }
+
   function envolverEnMHTML(htmlBody, imagenesArr) {
     const boundary = "----=_NextPart_Pericias_CABA_2026";
     let mhtml = `MIME-Version: 1.0\r\n`;
     mhtml += `Content-Type: multipart/related; boundary="${boundary}"\r\n\r\n`;
-
-    // Parte 1: Documento HTML principal para Word
     mhtml += `--${boundary}\r\n`;
     mhtml += `Content-Type: text/html; charset="utf-8"\r\n`;
     mhtml += `Content-Transfer-Encoding: 8bit\r\n\r\n`;
     mhtml += htmlBody + `\r\n\r\n`;
 
-    // Partes siguientes: Cada fotografía como recurso binario/base64 referenciado por Content-Location
     imagenesArr.forEach((imgObj, i) => {
       const base64Clean = imgObj.dataUrl.replace(/^data:image\/\w+;base64,/, '');
       const lineas76 = base64Clean.match(/.{1,76}/g).join('\r\n');
@@ -777,157 +835,45 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     return mhtml;
   }
 
-  function descargarWordInforme() {
+  function descargarWordSoloInforme() {
     const texto = document.getElementById('resultadoInforme').innerText;
-    if (!texto || texto.startsWith('Completá los datos')) {
-      return alert('Primero redactá el informe.');
-    }
+    if (!texto || texto.startsWith('Completá los datos')) return alert('Primero redactá el informe.');
 
-    const tpls = getTemplates();
-    const headerHTML = generarHeaderHTML();
-    const firmaHTML = escapeHTML(tpls.firma).split('\n').map((l, i) => i === 0 ? `<b>${l}</b>` : l).join('<br>');
-
-    let htmlInforme = `<div style="text-align:center; font-size:10.5pt; line-height:1.15; margin-bottom:10pt;">${headerHTML}</div>`;
-
-    const lineas = texto.split('\n');
-    lineas.forEach(linea => {
-      const l = linea.trim();
-      if (!l) return;
-      const esTitulo = l.startsWith('INFORME TÉCNICO') || l === 'OBJETOS DE LA INSPECCIÓN' || l === 'ELEMENTOS OFRECIDOS PARA ESTUDIO' || l === 'DILIGENCIAS PRACTICADAS' || l === 'CONCLUSIÓN';
-      const esDerecha = l.startsWith('Ciudad Autónoma de Buenos Aires,');
-
-      if (esDerecha) {
-        htmlInforme += `<p class="alinear-derecha">${escapeHTML(l)}</p>`;
-      } else if (esTitulo) {
-        htmlInforme += `<p class="titulo-seccion">${escapeHTML(l)}</p>`;
-      } else {
-        htmlInforme += `<p>${escapeHTML(l)}</p>`;
-      }
-    });
-    htmlInforme += `<div class="firma-compacta">${firmaHTML}</div>`;
-
-    let htmlAnexo = '';
-    if (fotosAnexo.length > 0) {
-      const { porPagina, cols, altoMM } = calcularPaginacionFotos();
-      const anchoPct = Math.floor(100 / cols);
-      const anchoImgPx = Math.floor(((180 / cols) - 8) * 3.78);
-      const altoImgPx = Math.floor(altoMM * 3.78);
-
-      const numInf = document.getElementById('numInforme').value || '[XXXX]';
-      const sumInf = document.getElementById('sumario').value || 'N/A';
-
-      for (let p = 0; p < fotosAnexo.length; p += porPagina) {
-        if (p > 0) {
-          htmlAnexo += `<br clear="all" style="page-break-before:always">`;
-        }
-        htmlAnexo += `<div style="text-align:center; font-size:10pt; line-height:1.15; margin-bottom:6pt;">${headerHTML}</div>`;
-        htmlAnexo += `<p style="text-align:center; font-weight:bold; text-decoration:underline; font-size:12pt; margin-bottom:2pt;">ANEXO I FOTOGRÁFICO</p>`;
-        htmlAnexo += `<p style="text-align:center; font-style:italic; font-size:10pt; margin-bottom:6pt;">Informe Técnico N° ${escapeHTML(numInf)}/2026 - Sumario N° ${escapeHTML(sumInf)}/2026</p>`;
-        htmlAnexo += `<table class="grilla-fotos">`;
-
-        const grupo = fotosAnexo.slice(p, p + porPagina);
-        for (let r = 0; r < grupo.length; r += cols) {
-          htmlAnexo += `<tr>`;
-          for (let c = 0; c < cols; c++) {
-            const idxGlobal = p + r + c;
-            const foto = grupo[r + c];
-            if (foto) {
-              htmlAnexo += `
-                <td style="width:${anchoPct}%;">
-                  <img src="file:///C:/pericia_img_${idxGlobal + 1}.jpg" width="${anchoImgPx}" height="${altoImgPx}" style="width:${anchoImgPx}px; height:${altoImgPx}px; border:1px solid #333;">
-                  <p class="epigrafe-placa"><b>PLACA N° ${idxGlobal + 1}:</b> ${escapeHTML(foto.epigrafe)}</p>
-                </td>`;
-            } else {
-              htmlAnexo += `<td style="width:${anchoPct}%; border:none;"></td>`;
-            }
-          }
-          htmlAnexo += `</tr>`;
-        }
-        htmlAnexo += `</table>`;
-        htmlAnexo += `<div class="firma-compacta" style="margin-top:8pt;">${firmaHTML}</div>`;
-      }
-    }
-
-    const htmlCompleto = `
-<html xmlns:o='urn:schemas-microsoft-com:office:office'
-      xmlns:w='urn:schemas-microsoft-com:office:word'
-      xmlns='http://www.w3.org/TR/REC-html40'>
-<head>
-<meta charset='utf-8'>
-<title>Informe Tecnico</title>
-<!--[if gte mso 9]>
-<xml>
-  <w:WordDocument>
-    <w:View>Print</w:View>
-    <w:Zoom>100</w:Zoom>
-    <w:DoNotOptimizeForBrowser/>
-  </w:WordDocument>
-</xml>
-<![endif]-->
+    const htmlInforme = construirHTMLCuerpoInforme();
+    const docSource = `
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'>
 <style>
-  @page SectionInforme {
-    size: 21.0cm 29.7cm;
-    margin: 4.0cm 1.0cm 2.0cm 3.0cm;
-    mso-paper-source: 0;
-  }
-  @page SectionAnexo {
-    size: 21.0cm 29.7cm;
-    margin: 1.5cm 1.5cm 1.5cm 1.5cm;
-    mso-paper-source: 0;
-  }
+  @page SectionInforme { size: 21.0cm 29.7cm; margin: 4.0cm 1.0cm 2.0cm 3.0cm; }
   div.SectionInforme { page: SectionInforme; }
-  div.SectionAnexo { page: SectionAnexo; }
-  body {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 12pt;
-    line-height: 1.15;
-    color: #000000;
-  }
-  p {
-    margin-top: 0pt;
-    margin-bottom: 8pt;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 12pt;
-    text-align: justify;
-  }
-  .titulo-seccion {
-    font-weight: bold;
-    text-align: left;
-    margin-top: 10pt;
-    margin-bottom: 6pt;
-    text-transform: uppercase;
-  }
-  .alinear-derecha { text-align: right; }
-  .firma-compacta {
-    text-align: right;
-    font-size: 10pt;
-    line-height: 1.15;
-    margin-top: 16pt;
-  }
-  table.grilla-fotos {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 4pt;
-  }
-  table.grilla-fotos td {
-    border: 1pt solid #000000;
-    padding: 4pt;
-    text-align: center;
-    vertical-align: top;
-  }
-  .epigrafe-placa {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 9.5pt;
-    margin-top: 3pt;
-    margin-bottom: 0pt;
-    text-align: center;
-  }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
 </style>
 </head>
-<body>
-  <div class="SectionInforme">${htmlInforme}</div>
-  ${htmlAnexo ? `<br clear="all" style="mso-break-type:section-break; page-break-before:always"><div class="SectionAnexo">${htmlAnexo}</div>` : ''}
-</body>
+<body><div class="SectionInforme">${htmlInforme}</div></body>
+</html>`;
+
+    const numArchivo = (document.getElementById('numInforme').value || 'S-N').replace(/[^a-zA-Z0-9_-]/g, '-');
+    const blob = new Blob(['\ufeff', docSource], { type: 'application/msword;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Informe_Tecnico_${numArchivo}_2026.doc`;
+    link.click();
+  }
+
+  function descargarWordSoloAnexo() {
+    if (fotosAnexo.length === 0) return alert('Cargá al menos una fotografía.');
+
+    const htmlAnexo = construirHTMLAnexoFotos(true);
+    const htmlCompleto = `
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'>
+<style>
+  @page SectionAnexo { size: 21.0cm 29.7cm; margin: 1.5cm 1.5cm 1.5cm 1.5cm; }
+  div.SectionAnexo { page: SectionAnexo; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; color: #000; }
+</style>
+</head>
+<body><div class="SectionAnexo">${htmlAnexo}</div></body>
 </html>`;
 
     const mhtmlFinal = envolverEnMHTML(htmlCompleto, fotosAnexo);
@@ -935,46 +881,42 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     const blob = new Blob([mhtmlFinal], { type: 'application/msword;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `Informe_Tecnico_${numArchivo}_2026.doc`;
+    link.download = `Anexo_Fotografico_${numArchivo}_2026.doc`;
     link.click();
   }
 
   function descargarWordElevacion() {
     const texto = document.getElementById('vistaNotaElevacion').innerText;
     const tpls = getTemplates();
+    const headerHTML = generarHeaderHTML();
     const firmaHTML = escapeHTML(tpls.firma).split('\n').map((l, i) => i === 0 ? `<b>${l}</b>` : l).join('<br>');
-    const lineas = texto.split('\n');
-    let htmlNota = '';
 
-    lineas.forEach((linea, idx) => {
+    let htmlNota = `<div style="text-align:center; font-size:10.5pt; line-height:1.15; margin-bottom:14pt;">${headerHTML}</div>`;
+    texto.split('\n').forEach((linea, idx) => {
       const l = linea.trim();
       if (!l) return;
       if (idx <= 1) {
-        htmlNota += `<p style="text-align:left; font-weight:bold; margin-bottom:2pt;">${escapeHTML(l)}</p>`;
+        htmlNota += `<p style="text-align:left; font-weight:bold; text-indent:0; margin-bottom:2pt;">${escapeHTML(l)}</p>`;
       } else if (l.startsWith('Ciudad Autónoma de Buenos Aires,')) {
-        htmlNota += `<p style="text-align:right; margin-top:8pt; margin-bottom:10pt;">${escapeHTML(l)}</p>`;
+        htmlNota += `<p style="text-align:right; text-indent:0; margin-top:8pt; margin-bottom:12pt;">${escapeHTML(l)}</p>`;
+      } else if (l.startsWith('A la Fiscalía') || l.startsWith('S...')) {
+        htmlNota += `<p style="text-align:left; font-weight:bold; text-indent:0; margin-bottom:4pt;">${escapeHTML(l)}</p>`;
       } else if (l.startsWith('VEHÍCULO') || l.startsWith('LUGAR DEL RELEVAMIENTO')) {
-        htmlNota += `<p style="text-align:left; margin-left:12pt; margin-bottom:4pt;">${escapeHTML(l)}</p>`;
+        htmlNota += `<p style="text-align:left; text-indent:0; margin-left:18pt; margin-bottom:4pt; line-height:1.5;">${escapeHTML(l)}</p>`;
       } else {
-        htmlNota += `<p style="text-align:justify; margin-bottom:8pt;">${escapeHTML(l)}</p>`;
+        htmlNota += `<p style="text-align:justify; text-indent:1.25cm; margin-bottom:8pt; line-height:1.5;">${escapeHTML(l)}</p>`;
       }
     });
 
     htmlNota += `<div style="text-align:right; font-size:10pt; line-height:1.15; margin-top:22pt;">${firmaHTML}</div>`;
 
     const docSource = `
-<html xmlns:o='urn:schemas-microsoft-com:office:office'
-      xmlns:w='urn:schemas-microsoft-com:office:word'
-      xmlns='http://www.w3.org/TR/REC-html40'>
-<head>
-<meta charset='utf-8'>
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'>
 <style>
-  @page SectionElevacion {
-    size: 21.0cm 29.7cm;
-    margin: 2.5cm 2.0cm 2.0cm 2.5cm;
-  }
+  @page SectionElevacion { size: 21.0cm 29.7cm; margin: 2.5cm 2.0cm 2.0cm 2.5cm; }
   div.SectionElevacion { page: SectionElevacion; }
-  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.25; color: #000; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
 </style>
 </head>
 <body><div class="SectionElevacion">${htmlNota}</div></body>
@@ -988,61 +930,12 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     link.click();
   }
 
-  // ==========================================
-  // 8. IMPRESIÓN / PDF EN VENTANA LIMPIA CON MÁRGENES EXACTOS
-  // ==========================================
-  function imprimirPDFInforme() {
+  function imprimirPDFCompleto() {
     const texto = document.getElementById('resultadoInforme').innerText;
-    if (!texto || texto.startsWith('Completá los datos')) {
-      return alert('Primero redactá el informe.');
-    }
+    if (!texto || texto.startsWith('Completá los datos')) return alert('Primero redactá el informe.');
 
-    const tpls = getTemplates();
-    const headerHTML = generarHeaderHTML();
-    const firmaHTML = escapeHTML(tpls.firma).split('\n').map((l, i) => i === 0 ? `<strong>${l}</strong>` : l).join('<br>');
-
-    let cuerpoHTML = `<div style="text-align:center; font-size:10.5pt; line-height:1.15; margin-bottom:12pt;">${headerHTML}</div>`;
-    texto.split('\n').forEach(linea => {
-      const l = linea.trim();
-      if (!l) return;
-      const esTitulo = l.startsWith('INFORME TÉCNICO') || l === 'OBJETOS DE LA INSPECCIÓN' || l === 'ELEMENTOS OFRECIDOS PARA ESTUDIO' || l === 'DILIGENCIAS PRACTICADAS' || l === 'CONCLUSIÓN';
-      const esDerecha = l.startsWith('Ciudad Autónoma de Buenos Aires,');
-      if (esDerecha) {
-        cuerpoHTML += `<p style="text-align:right; margin:0 0 8pt;">${escapeHTML(l)}</p>`;
-      } else if (esTitulo) {
-        cuerpoHTML += `<p style="text-align:left; font-weight:bold; margin:10pt 0 6pt;">${escapeHTML(l)}</p>`;
-      } else {
-        cuerpoHTML += `<p style="text-align:justify; margin:0 0 8pt;">${escapeHTML(l)}</p>`;
-      }
-    });
-    cuerpoHTML += `<div style="text-align:right; font-size:10pt; line-height:1.15; margin-top:16pt;">${firmaHTML}</div>`;
-
-    let anexoHTML = '';
-    if (fotosAnexo.length > 0) {
-      const { porPagina, cols, altoMM } = calcularPaginacionFotos();
-      const numInf = document.getElementById('numInforme').value || '[XXXX]';
-      const sumInf = document.getElementById('sumario').value || 'N/A';
-
-      for (let p = 0; p < fotosAnexo.length; p += porPagina) {
-        anexoHTML += `<div class="pagina-anexo">`;
-        anexoHTML += `<div style="text-align:center; font-size:10pt; line-height:1.15; margin-bottom:6pt;">${headerHTML}</div>`;
-        anexoHTML += `<h3 style="text-align:center; text-decoration:underline; margin:0 0 2pt; font-size:12pt;">ANEXO I FOTOGRÁFICO</h3>`;
-        anexoHTML += `<p style="text-align:center; font-style:italic; margin:0 0 8pt; font-size:10pt;">Informe Técnico N° ${escapeHTML(numInf)}/2026 - Sumario N° ${escapeHTML(sumInf)}/2026</p>`;
-        anexoHTML += `<div style="display:grid; grid-template-columns:repeat(${cols}, 1fr); gap:8pt;">`;
-
-        const grupo = fotosAnexo.slice(p, p + porPagina);
-        grupo.forEach((f, idxLocal) => {
-          anexoHTML += `
-            <div style="border:1pt solid #000; padding:4pt; text-align:center;">
-              <img src="${f.dataUrl}" style="width:100%; height:${altoMM}mm; object-fit:cover; border:0.5pt solid #444;">
-              <p style="font-size:9.5pt; margin:3pt 0 0; text-align:center;"><strong>PLACA N° ${p + idxLocal + 1}:</strong> ${escapeHTML(f.epigrafe)}</p>
-            </div>`;
-        });
-        anexoHTML += `</div>`;
-        anexoHTML += `<div style="text-align:right; font-size:10pt; line-height:1.15; margin-top:10pt;">${firmaHTML}</div>`;
-        anexoHTML += `</div>`;
-      }
-    }
+    const cuerpoHTML = construirHTMLCuerpoInforme();
+    const anexoHTML = fotosAnexo.length > 0 ? construirHTMLAnexoFotos(false) : '';
 
     const win = window.open('', '_blank', 'width=900,height=1100');
     win.document.write(`
@@ -1052,32 +945,16 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
 <meta charset="utf-8">
 <title>Informe Técnico N° ${document.getElementById('numInforme').value || ''}/2026</title>
 <style>
-  @page {
-    size: A4 portrait;
-    margin: 4.0cm 1.0cm 2.0cm 3.0cm;
-  }
-  @page anexo {
-    size: A4 portrait;
-    margin: 1.5cm 1.5cm 1.5cm 1.5cm;
-  }
+  @page { size: A4 portrait; margin: 4.0cm 1.0cm 2.0cm 3.0cm; }
+  @page anexo { size: A4 portrait; margin: 1.5cm 1.5cm 1.5cm 1.5cm; }
   * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 12pt;
-    line-height: 1.25;
-    color: #000;
-  }
-  .pagina-anexo {
-    page: anexo;
-    page-break-before: always;
-    break-before: page;
-  }
+  html, body { margin: 0; padding: 0; font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
+  .bloque-informe { width: 100%; padding: 0 4pt; }
+  .pagina-anexo { page: anexo; page-break-before: always; break-before: page; width: 100%; }
 </style>
 </head>
 <body>
-  ${cuerpoHTML}
+  <div class="bloque-informe">${cuerpoHTML}</div>
   ${anexoHTML}
 </body>
 </html>`);
@@ -1089,19 +966,23 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
   function imprimirElevacion() {
     const texto = document.getElementById('vistaNotaElevacion').innerText;
     const tpls = getTemplates();
+    const headerHTML = generarHeaderHTML();
     const firmaHTML = escapeHTML(tpls.firma).split('\n').map((l, i) => i === 0 ? `<strong>${l}</strong>` : l).join('<br>');
-    let htmlNota = '';
+
+    let htmlNota = `<div style="text-align:center; font-size:10.5pt; line-height:1.15; margin-bottom:14pt;">${headerHTML}</div>`;
     texto.split('\n').forEach((linea, idx) => {
       const l = linea.trim();
       if (!l) return;
       if (idx <= 1) {
-        htmlNota += `<p style="text-align:left; font-weight:bold; margin:0 0 2pt;">${escapeHTML(l)}</p>`;
+        htmlNota += `<p style="text-align:left; font-weight:bold; text-indent:0; margin:0 0 2pt;">${escapeHTML(l)}</p>`;
       } else if (l.startsWith('Ciudad Autónoma de Buenos Aires,')) {
-        htmlNota += `<p style="text-align:right; margin:8pt 0 10pt;">${escapeHTML(l)}</p>`;
+        htmlNota += `<p style="text-align:right; text-indent:0; margin:8pt 0 12pt;">${escapeHTML(l)}</p>`;
+      } else if (l.startsWith('A la Fiscalía') || l.startsWith('S...')) {
+        htmlNota += `<p style="text-align:left; font-weight:bold; text-indent:0; margin:0 0 4pt;">${escapeHTML(l)}</p>`;
       } else if (l.startsWith('VEHÍCULO') || l.startsWith('LUGAR DEL RELEVAMIENTO')) {
-        htmlNota += `<p style="text-align:left; margin:0 0 4pt 12pt;">${escapeHTML(l)}</p>`;
+        htmlNota += `<p style="text-align:left; text-indent:0; margin:0 0 4pt 18pt; line-height:1.5;">${escapeHTML(l)}</p>`;
       } else {
-        htmlNota += `<p style="text-align:justify; margin:0 0 8pt;">${escapeHTML(l)}</p>`;
+        htmlNota += `<p style="text-align:justify; text-indent:1.25cm; margin:0 0 8pt; line-height:1.5;">${escapeHTML(l)}</p>`;
       }
     });
     htmlNota += `<div style="text-align:right; font-size:10pt; line-height:1.15; margin-top:22pt;">${firmaHTML}</div>`;
@@ -1115,7 +996,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
 <title>Nota de Elevación</title>
 <style>
   @page { size: A4 portrait; margin: 2.5cm 2.0cm 2.0cm 2.5cm; }
-  body { margin: 0; font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.3; color: #000; }
+  body { margin: 0; font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
 </style>
 </head>
 <body>${htmlNota}</body>
@@ -1130,9 +1011,6 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     alert('Informe copiado al portapapeles.');
   }
 
-  // ==========================================
-  // 9. BASE DE DATOS LOCAL
-  // ==========================================
   function guardarEnBD(silencioso = false) {
     if (!db) return;
     const registro = {
@@ -1164,7 +1042,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     const tx = db.transaction(["informes"], "readonly");
     const req = tx.objectStore("informes").count();
     req.onsuccess = () => {
-      document.getElementById('dbCounter').textContent = `Base Local: ${req.result} informes`;
+      document.getElementById('dbCounter').textContent = `Base Data Local: ${req.result} informes`;
     };
   }
 
@@ -1224,7 +1102,7 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
       document.getElementById('datosCrudos').value = r.datosCrudos || '';
       document.getElementById('resultadoInforme').innerText = r.textoFinal || '';
       fotosAnexo = r.fotos || [];
-      recalcularFojas();
+      recalcularFojasTotales();
       renderizarGaleria();
       actualizarNotaElevacion();
       cambiarTab('editor', document.querySelectorAll('.tab-btn')[0]);
@@ -1242,10 +1120,10 @@ En tal sentido se adjunta un Informe Técnico, el cual consta de ${numeroALetras
     informeActualId = null;
     ['numInforme', 'sumario', 'comisaria', 'horaArribo', 'lugarConsigna', 'datosCrudos'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('caratula').value = 'LESIONES ART. 94 del C.P.N.';
-    document.getElementById('elevacionResumenVehiculos').value = `VEHÍCULO 1: [Completar]\nVEHÍCULO 2: [Completar]\nLUGAR DEL RELEVAMIENTO: [Completar]`;
+    document.getElementById('elevacionResumenVehiculos').value = `VEHÍCULO 1: [Completar]\nLUGAR DEL RELEVAMIENTO: [Completar]`;
     document.getElementById('resultadoInforme').innerText = 'Completá los datos a la izquierda y presioná "Redactar Informe"...';
     fotosAnexo = [];
-    recalcularFojas();
+    recalcularFojasTotales();
     renderizarGaleria();
     actualizarNotaElevacion();
   }
